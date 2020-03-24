@@ -1,5 +1,6 @@
 package siedlecki.mateusz.c2capp.model.delivery;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,6 +34,7 @@ public class Delivery extends BaseEntity {
     private String info;
 
 
+    @Builder
     public Delivery(Long id, Dealer dealer, Supplier supplier, Boolean deliveryOk, Employee picker, String info) {
         super(id);
         this.creationTime = LocalDateTime.now();
