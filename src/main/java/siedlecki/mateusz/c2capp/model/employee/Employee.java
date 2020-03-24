@@ -1,9 +1,10 @@
-package siedlecki.mateusz.c2capp.model;
+package siedlecki.mateusz.c2capp.model.employee;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import siedlecki.mateusz.c2capp.model.BaseEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +17,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @NoArgsConstructor
 @Entity
-public class User extends BaseEntity {
+public class Employee extends BaseEntity {
 
     @NotNull
     @Column(nullable = false)
@@ -39,10 +40,13 @@ public class User extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     private WorkPosition workPosition;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Department department;
+
 
     @Builder
-    public User(Long id, String firstName, String lastName, String login, String password, String email, String phoneNumber,
-                WorkPosition workPosition) {
+    public Employee(Long id, String firstName, String lastName, String login, String password, String email, String phoneNumber,
+                    WorkPosition workPosition, Department department) {
         super(id);
         this.firstName = firstName;
         this.lastName = lastName;
@@ -51,5 +55,6 @@ public class User extends BaseEntity {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.workPosition = workPosition;
+        this.department = department;
     }
 }

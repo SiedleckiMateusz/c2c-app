@@ -1,22 +1,23 @@
 package siedlecki.mateusz.c2capp.model;
 
 import org.junit.jupiter.api.Test;
+import siedlecki.mateusz.c2capp.model.employee.Employee;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
-class UserTest {
+class EmployeeTest {
 
 
     @Test
     void builderWithId() {
-        User user = User.builder()
+        Employee employee = Employee.builder()
                 .id(1L)
                 .firstName("Jan")
                 .lastName("Kowalski")
                 .login("jankowalski")
                 .build();
 
-        assertNotNull(user);
+        assertNotNull(employee);
     }
 }
