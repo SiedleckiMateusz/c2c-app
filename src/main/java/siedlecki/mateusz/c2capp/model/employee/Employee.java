@@ -5,12 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import siedlecki.mateusz.c2capp.model.BaseEntity;
+import siedlecki.mateusz.c2capp.model.delivery.Delivery;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 
 @Getter
@@ -37,11 +39,14 @@ public class Employee extends BaseEntity {
 
     private String phoneNumber;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne()
     private WorkPosition workPosition;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne()
     private Department department;
+
+    @OneToMany(mappedBy = "delivery")
+    private Set<Delivery> deliveries;
 
 
     @Builder
