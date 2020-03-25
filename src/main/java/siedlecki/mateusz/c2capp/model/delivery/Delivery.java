@@ -9,7 +9,9 @@ import siedlecki.mateusz.c2capp.model.employee.Employee;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 
 @Getter
@@ -32,6 +34,9 @@ public class Delivery extends BaseEntity {
     private Employee picker;
 
     private String info;
+
+    @OneToMany(mappedBy = "delivery")
+    private Set<ProductInDelivery> products;
 
 
     @Builder
