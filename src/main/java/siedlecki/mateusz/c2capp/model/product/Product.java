@@ -29,8 +29,12 @@ public class Product extends BaseEntity {
 
     private String pictureUrl;
 
+    @ManyToOne
+    private Location location;
+
     @Builder
-    public Product(Long id, String name, String description, ProductGroup productGroup, String symbol, String barcode, String pictureUrl) {
+    public Product(Long id, String name, String description, ProductGroup productGroup, String symbol, String barcode,
+                   String pictureUrl, Location location) {
         super(id);
         this.name = name;
         this.description = description;
@@ -38,5 +42,6 @@ public class Product extends BaseEntity {
         this.symbol = symbol;
         this.barcode = barcode;
         this.pictureUrl = pictureUrl;
+        this.location = location;
     }
 }
