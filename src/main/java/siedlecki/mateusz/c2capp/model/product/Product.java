@@ -7,6 +7,7 @@ import lombok.Setter;
 import siedlecki.mateusz.c2capp.model.BaseEntity;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 
@@ -21,6 +22,7 @@ public class Product extends BaseEntity {
     private String description;
 
     @ManyToOne
+    @JoinColumn(name = "product_group_id")
     private ProductGroup productGroup;
 
     private String symbol;
@@ -30,6 +32,7 @@ public class Product extends BaseEntity {
     private String pictureUrl;
 
     @ManyToOne
+    @JoinColumn(name = "location_id")
     private Location location;
 
     @Builder

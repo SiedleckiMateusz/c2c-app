@@ -9,6 +9,8 @@ import siedlecki.mateusz.c2capp.model.delivery.ProductInDelivery;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -20,6 +22,6 @@ public class Unit extends BaseEntity {
 
     private String name;
 
-    @OneToMany(mappedBy = "product_in_delivery")
-    private Set<ProductInDelivery> products;
+    @OneToMany(mappedBy = "unit")
+    private List<ProductInDelivery> products = new ArrayList<>();
 }

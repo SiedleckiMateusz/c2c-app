@@ -7,10 +7,10 @@ import lombok.Setter;
 import siedlecki.mateusz.c2capp.model.BaseEntity;
 import siedlecki.mateusz.c2capp.model.employee.Employee;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 
@@ -23,20 +23,23 @@ public class Delivery extends BaseEntity {
     private LocalDateTime creationTime;
 
     @ManyToOne
+    @JoinColumn(name = "dealer_id")
     private Dealer dealer;
 
     @ManyToOne
+    @JoinColumn(name = "supplier_id")
     private Supplier supplier;
 
     private Boolean deliveryOk;
 
     @ManyToOne
+    @JoinColumn(name = "picker_id")
     private Employee picker;
 
     private String info;
 
-    @OneToMany(mappedBy = "delivery")
-    private Set<ProductInDelivery> products;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "delivery")
+    private List<ProductInDelivery> products = new ArrayList<>();
 
 
     @Builder

@@ -9,6 +9,7 @@ import siedlecki.mateusz.c2capp.model.product.Product;
 import siedlecki.mateusz.c2capp.model.product.Unit;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
@@ -23,11 +24,13 @@ public class ProductInDelivery extends BaseEntity {
     private Product product;
 
     @ManyToOne
+    @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
     private Float quantity;
 
     @ManyToOne
+    @JoinColumn(name = "unit_id")
     private Unit unit;
 
 }

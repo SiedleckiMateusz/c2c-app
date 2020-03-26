@@ -8,7 +8,9 @@ import siedlecki.mateusz.c2capp.model.BaseEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,7 +22,7 @@ public class Supplier extends BaseEntity {
 
     private String name;
 
-    @OneToMany(mappedBy = "delivery")
-    private Set<Delivery> deliveries = new HashSet<>();
+    @OneToMany(mappedBy = "supplier")
+    private List<Delivery> deliveries = new ArrayList<>();
 
 }

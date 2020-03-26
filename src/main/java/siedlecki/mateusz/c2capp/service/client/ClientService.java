@@ -1,6 +1,5 @@
 package siedlecki.mateusz.c2capp.service.client;
 
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import siedlecki.mateusz.c2capp.model.client.Client;
 import siedlecki.mateusz.c2capp.repository.client.ClientRepository;

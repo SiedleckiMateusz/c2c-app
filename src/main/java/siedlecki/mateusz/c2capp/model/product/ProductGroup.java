@@ -8,6 +8,8 @@ import siedlecki.mateusz.c2capp.model.BaseEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -19,6 +21,6 @@ public class ProductGroup extends BaseEntity {
 
     private String name;
 
-    @OneToMany(mappedBy = "product")
-    private Set<Product> products;
+    @OneToMany(mappedBy = "productGroup")
+    private List<Product> products = new ArrayList<>();
 }

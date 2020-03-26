@@ -7,11 +7,10 @@ import lombok.Setter;
 import siedlecki.mateusz.c2capp.model.BaseEntity;
 import siedlecki.mateusz.c2capp.model.delivery.Delivery;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 
@@ -39,14 +38,16 @@ public class Employee extends BaseEntity {
 
     private String phoneNumber;
 
-    @ManyToOne()
+    @ManyToOne
+    @JoinColumn(name = "work_position_id")
     private WorkPosition workPosition;
 
-    @ManyToOne()
+    @ManyToOne
+    @JoinColumn(name = "department_id")
     private Department department;
 
-    @OneToMany(mappedBy = "delivery")
-    private Set<Delivery> deliveries;
+    @OneToMany(mappedBy = "picker")
+    private List<Delivery> deliveries = new ArrayList<>();
 
 
     @Builder

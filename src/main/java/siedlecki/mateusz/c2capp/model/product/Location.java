@@ -8,7 +8,8 @@ import siedlecki.mateusz.c2capp.model.BaseEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,6 +20,6 @@ public class Location extends BaseEntity {
 
     private String name;
 
-    @OneToMany(mappedBy = "product")
-    private Set<Product> products;
+    @OneToMany(mappedBy = "location")
+    private List<Product> products = new ArrayList<>();
 }

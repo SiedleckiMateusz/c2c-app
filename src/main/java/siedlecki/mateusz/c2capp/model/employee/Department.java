@@ -9,6 +9,8 @@ import siedlecki.mateusz.c2capp.model.BaseEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,7 +22,7 @@ public class Department extends BaseEntity {
 
     private String name;
 
-    @OneToMany(mappedBy = "employee")
-    private Set<Employee> employees;
+    @OneToMany(mappedBy = "department")
+    private List<Employee> employees = new ArrayList<>();
 
 }

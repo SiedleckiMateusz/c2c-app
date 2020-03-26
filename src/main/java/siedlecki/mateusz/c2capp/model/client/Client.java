@@ -7,6 +7,7 @@ import lombok.Setter;
 import siedlecki.mateusz.c2capp.model.BaseEntity;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
@@ -30,10 +31,12 @@ public class Client extends BaseEntity {
     private String info;
 
     @ManyToOne
+    @JoinColumn(name = "route_id")
     private Route route;
 
     @Builder
-    public Client(String warehouseName, String realName, String nip, String address, Coordinates coordinates, String info, Route route) {
+    public Client(Long id, String warehouseName, String realName, String nip, String address, Coordinates coordinates, String info, Route route) {
+        super(id);
         this.warehouseName = warehouseName;
         this.realName = realName;
         this.nip = nip;

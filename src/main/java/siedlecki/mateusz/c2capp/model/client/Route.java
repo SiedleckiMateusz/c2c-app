@@ -8,6 +8,8 @@ import siedlecki.mateusz.c2capp.model.BaseEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -19,6 +21,6 @@ public class Route extends BaseEntity {
 
     private String name;
 
-    @OneToMany(mappedBy = "client")
-    private Set<Client> client;
+    @OneToMany(mappedBy = "route")
+    private List<Client> client = new ArrayList<>();
 }
