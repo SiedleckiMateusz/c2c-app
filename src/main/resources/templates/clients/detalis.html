@@ -5,6 +5,7 @@
     <title>Product</title>
 </head>
 <body>
+<div th:if="${client != null}">
     <p th:text="${client.id}"></p>
     <p th:text="${client.warehouseName}"></p>
     <p th:text="${client.realName}"></p>
@@ -13,5 +14,9 @@
     <p th:text="${client.coordinates.x}"></p>
     <p th:text="${client.coordinates.y}"></p>
     <p th:text="${client.info}"></p>
+    <p></p>
+</div>
+
+
 </body>
 </html>
