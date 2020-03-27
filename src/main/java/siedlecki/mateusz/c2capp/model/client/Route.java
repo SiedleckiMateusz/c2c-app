@@ -23,4 +23,10 @@ public class Route extends BaseEntity {
 
     @OneToMany(mappedBy = "route")
     private List<Client> client = new ArrayList<>();
+
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

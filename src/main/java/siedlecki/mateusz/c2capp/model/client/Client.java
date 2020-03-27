@@ -45,4 +45,17 @@ public class Client extends BaseEntity {
         this.info = info;
         this.route = route;
     }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "warehouseName='" + warehouseName + '\'' +
+                ", realName='" + realName + '\'' +
+                ", nip='" + nip + '\'' +
+                ", address='" + address + '\'' +
+                ", coordinates=" + coordinates +
+                ", info='" + info + '\'' +
+                ", route=" + route +
+                '}';
+    }
 }

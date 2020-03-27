@@ -23,4 +23,11 @@ public class Coordinates extends BaseEntity {
     @OneToOne
     private Client client;
 
+    @Override
+    public String toString() {
+        return "Coordinates{" +
+                "x='" + x + '\'' +
+                ", y='" + y + '\'' +
+                '}';
+    }
 }
