@@ -11,7 +11,6 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -28,4 +27,17 @@ public class WorkPosition extends BaseEntity {
     @OneToMany(mappedBy = "workPosition")
     private List<Employee> employees = new ArrayList<>();
 
+    public WorkPosition(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "WorkPosition{" +
+                "id=" + getId() +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

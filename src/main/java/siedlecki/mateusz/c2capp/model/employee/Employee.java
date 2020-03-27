@@ -11,7 +11,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 
 @Getter
@@ -62,5 +61,21 @@ public class Employee extends BaseEntity {
         this.phoneNumber = phoneNumber;
         this.workPosition = workPosition;
         this.department = department;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + getId() +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", workPosition=" + workPosition +
+                ", department=" + department +
+                '}';
     }
 }

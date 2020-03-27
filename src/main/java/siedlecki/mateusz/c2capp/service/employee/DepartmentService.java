@@ -33,6 +33,10 @@ public class DepartmentService implements SimpleService<Department,Long> {
         return repository.save(department);
     }
 
+    public List<Department> saveAll(List<Department> objectsList) {
+        return repository.saveAll(objectsList);
+    }
+
     @Override
     public void delete(Department obj) {
         repository.delete(obj);

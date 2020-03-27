@@ -11,7 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -22,7 +21,18 @@ public class Department extends BaseEntity {
 
     private String name;
 
+    public Department(String name) {
+        this.name = name;
+    }
+
     @OneToMany(mappedBy = "department")
     private List<Employee> employees = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "Department{" +
+                "id=" + getId() +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

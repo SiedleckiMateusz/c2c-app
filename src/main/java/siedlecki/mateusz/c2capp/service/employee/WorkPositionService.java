@@ -33,6 +33,10 @@ public class WorkPositionService implements SimpleService<WorkPosition,Long> {
         return repository.save(workPosition);
     }
 
+    public List<WorkPosition> saveAll(List<WorkPosition> objectsList) {
+        return repository.saveAll(objectsList);
+    }
+
     @Override
     public void delete(WorkPosition obj) {
         repository.delete(obj);
