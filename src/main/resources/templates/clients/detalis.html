@@ -14,9 +14,8 @@
     <p th:text="${client.coordinates.x}"></p>
     <p th:text="${client.coordinates.y}"></p>
     <p th:text="${client.info}"></p>
-    <p></p>
+
 </div>
-
-
+    <p th:if="${client == null}"> Nie ma takiego użytkownika</p>
 </body>
 </html>

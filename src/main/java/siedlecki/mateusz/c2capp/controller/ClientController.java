@@ -24,7 +24,7 @@ public class ClientController {
 
     @RequestMapping({"/clients/{id}"})
     public String getAll(Model model,@PathVariable String id){
-        model.addAttribute("client",clientService.findById(Long.parseLong(id)).orElseThrow(() -> new RuntimeException("Nie ma takiego użytkownika")));
+        model.addAttribute("client",clientService.findById(Long.parseLong(id)).orElse(null));
 
         return "clients/detalis";
     }
