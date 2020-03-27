@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Clients</title>
+
+    <style>
+        table,th,tr,td{
+            border: 1px solid black;
+            border-spacing: inherit;
+        }
+    </style>
+</head>
+<body>
+    <h1>Client list</h1>
+    <table>
+        <tr>
+            <th>Nazwa magazynowa</th>
+            <th>Nazwa rzeczywista</th>
+            <th>NIP</th>
+            <th>Adres</th>
+        </tr>
+        <tr th:each="client : ${clients}">
+            <td th:text="${client.warehouseName}">Moja nazwa</td>
+            <td th:text="${client.realName}">Tak się na prawdę nazywam</td>
+            <td th:text="${client.nip}">nip-nip-nip</td>
+            <td th:text="${client.address}">Moja ulica 21, Moje miasto</td>
+        </tr>
+    </table>
+</body>
+</html>
