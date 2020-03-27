@@ -1,18 +1,16 @@
 package siedlecki.mateusz.c2capp.model.client;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jdk.nashorn.internal.objects.annotations.Constructor;
+import lombok.*;
 import siedlecki.mateusz.c2capp.model.BaseEntity;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class Coordinates extends BaseEntity {
@@ -21,12 +19,17 @@ public class Coordinates extends BaseEntity {
     private String y;
 
     @OneToOne
+    @JoinColumn(name = "client_id",nullable = false)
     private Client client;
+
+    public Coordinates(String x, String y) {
+        this.x = x;
+        this.y = y;
+    }
 
     @Override
     public String toString() {
-        return "Coordinates{" +
-                "x='" + x + '\'' +
+        return "x='" + x + '\'' +
                 ", y='" + y + '\'' +
                 '}';
     }

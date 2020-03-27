@@ -19,12 +19,14 @@
             <th>Nazwa rzeczywista</th>
             <th>NIP</th>
             <th>Adres</th>
+            <th>More...</th>
         </tr>
         <tr th:each="client : ${clients}">
             <td th:text="${client.warehouseName}">Moja nazwa</td>
             <td th:text="${client.realName}">Tak się na prawdę nazywam</td>
             <td th:text="${client.nip}">nip-nip-nip</td>
             <td th:text="${client.address}">Moja ulica 21, Moje miasto</td>
+            <td><a href="#" th:href="'/clients/'+${client.id}">More...</a> </td>
         </tr>
     </table>
 </body>

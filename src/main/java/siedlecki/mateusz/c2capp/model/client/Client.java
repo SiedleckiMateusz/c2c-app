@@ -6,10 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import siedlecki.mateusz.c2capp.model.BaseEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -25,7 +22,7 @@ public class Client extends BaseEntity {
 
     private String address;
 
-    @OneToOne(mappedBy = "client")
+    @OneToOne(mappedBy = "client",cascade = CascadeType.ALL)
     private Coordinates coordinates;
 
     private String info;
