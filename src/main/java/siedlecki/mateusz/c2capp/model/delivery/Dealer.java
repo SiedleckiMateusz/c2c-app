@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -25,4 +24,18 @@ public class Dealer extends BaseEntity {
 
     @OneToMany(mappedBy = "dealer")
     private List<Delivery> deliveries = new ArrayList<>();
+
+    public Dealer(String name, String nip) {
+        this.name = name;
+        this.nip = nip;
+    }
+
+    @Override
+    public String toString() {
+        return "Dealer{" +
+                "id=" + getId() +
+                ", name='" + name + '\'' +
+                ", nip='" + nip + '\'' +
+                '}';
+    }
 }

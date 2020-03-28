@@ -11,7 +11,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 
 @Getter
@@ -38,12 +37,13 @@ public class Delivery extends BaseEntity {
 
     private String info;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "delivery")
-    private List<ProductInDelivery> products = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "delivery",fetch = FetchType.EAGER)
+    private List<ProductInDelivery> productsInDelivery = new ArrayList<>();
 
 
     @Builder
-    public Delivery(Long id, Dealer dealer, Supplier supplier, Boolean deliveryOk, Employee picker, String info) {
+    public Delivery(Long id, Dealer dealer, Supplier supplier, Boolean deliveryOk, Employee picker, String info
+            , List<ProductInDelivery> productsInDelivery) {
         super(id);
         this.creationTime = LocalDateTime.now();
         this.dealer = dealer;
@@ -51,5 +51,20 @@ public class Delivery extends BaseEntity {
         this.deliveryOk = deliveryOk;
         this.picker = picker;
         this.info = info;
+        this.productsInDelivery = productsInDelivery;
+    }
+
+    @Override
+    public String toString() {
+        return "Delivery{" +
+                "id=" + getId() +
+                ", creationTime=" + creationTime +
+                ", dealer=" + dealer +
+                ", supplier=" + supplier +
+                ", deliveryOk=" + deliveryOk +
+                ", picker=" + picker +
+                ", info='" + info + '\'' +
+                ", productsInDelivery=" + productsInDelivery +
+                '}';
     }
 }

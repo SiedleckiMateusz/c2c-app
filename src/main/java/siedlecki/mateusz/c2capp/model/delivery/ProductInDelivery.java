@@ -1,9 +1,6 @@
 package siedlecki.mateusz.c2capp.model.delivery;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import siedlecki.mateusz.c2capp.model.BaseEntity;
 import siedlecki.mateusz.c2capp.model.product.Product;
 import siedlecki.mateusz.c2capp.model.product.Unit;
@@ -33,4 +30,21 @@ public class ProductInDelivery extends BaseEntity {
     @JoinColumn(name = "unit_id")
     private Unit unit;
 
+    @Builder
+    public ProductInDelivery(Product product, Float quantity, Unit unit,Delivery delivery) {
+        this.product = product;
+        this.quantity = quantity;
+        this.unit = unit;
+        this.delivery = delivery;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductInDelivery{" +
+                "id=" + getId() +
+                ", product=" + product +
+                ", quantity=" + quantity +
+                ", unit=" + unit +
+                '}';
+    }
 }

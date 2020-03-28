@@ -11,34 +11,38 @@ import java.util.Optional;
 @Service
 public class DealerService implements SimpleService<Dealer,Long> {
 
-    private final DealerRepository dealerRepository;
+    private final DealerRepository repository;
 
-    public DealerService(DealerRepository dealerRepository) {
-        this.dealerRepository = dealerRepository;
+    public DealerService(DealerRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public List<Dealer> findAll() {
-        return dealerRepository.findAll();
+        return repository.findAll();
     }
 
     @Override
     public Optional<Dealer> findById(Long aLong) {
-        return dealerRepository.findById(aLong);
+        return repository.findById(aLong);
     }
 
     @Override
     public Dealer save(Dealer dealer) {
-        return dealerRepository.save(dealer);
+        return repository.save(dealer);
+    }
+
+    public List<Dealer> saveAll(List<Dealer> dealers){
+        return repository.saveAll(dealers);
     }
 
     @Override
     public void delete(Dealer obj) {
-        dealerRepository.delete(obj);
+        repository.delete(obj);
     }
 
     @Override
     public void deleteById(Long aLong) {
-        dealerRepository.deleteById(aLong);
+        repository.deleteById(aLong);
     }
 }

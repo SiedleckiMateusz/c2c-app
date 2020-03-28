@@ -32,6 +32,10 @@ public class LocationService implements SimpleService<Location,Long> {
         return repository.save(location);
     }
 
+    public List<Location> saveAll(List<Location> locations){
+        return repository.saveAll(locations);
+    }
+
     @Override
     public void delete(Location obj) {
         repository.delete(obj);

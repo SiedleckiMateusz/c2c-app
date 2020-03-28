@@ -32,6 +32,10 @@ public class SupplierService implements SimpleService<Supplier,Long> {
         return repository.save(supplier);
     }
 
+    public List<Supplier> saveAll(List<Supplier> suppliers){
+        return repository.saveAll(suppliers);
+    }
+
     @Override
     public void delete(Supplier obj) {
         repository.delete(obj);

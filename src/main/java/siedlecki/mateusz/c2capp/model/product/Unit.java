@@ -11,7 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -22,6 +21,22 @@ public class Unit extends BaseEntity {
 
     private String name;
 
+    private String shortName;
+
     @OneToMany(mappedBy = "unit")
     private List<ProductInDelivery> products = new ArrayList<>();
+
+    public Unit(String name, String shortName) {
+        this.name = name;
+        this.shortName = shortName;
+    }
+
+    @Override
+    public String toString() {
+        return "Unit{" +
+                "id=" + getId() +
+                ", name='" + name + '\'' +
+                ", shortName='" + shortName + '\'' +
+                '}';
+    }
 }

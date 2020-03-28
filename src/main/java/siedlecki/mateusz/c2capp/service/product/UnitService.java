@@ -32,6 +32,10 @@ public class UnitService implements SimpleService<Unit,Long> {
         return repository.save(unit);
     }
 
+    public List<Unit> saveAll(List<Unit> units){
+        return repository.saveAll(units);
+    }
+
     @Override
     public void delete(Unit obj) {
         repository.delete(obj);
