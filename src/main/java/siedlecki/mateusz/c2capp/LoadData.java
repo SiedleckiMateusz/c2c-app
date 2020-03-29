@@ -29,6 +29,7 @@ import siedlecki.mateusz.c2capp.service.product.ProductFlagService;
 import siedlecki.mateusz.c2capp.service.product.ProductService;
 import siedlecki.mateusz.c2capp.service.product.UnitService;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -84,7 +85,7 @@ public class LoadData implements CommandLineRunner {
     public void createClients(){
         Route lublin = new Route("Lublin",new ArrayList<>());
         Route pulawy = new Route("Puławy",new ArrayList<>());
-        Route krasnik = new Route("Krasnik",new ArrayList<>());
+        Route krasnik = new Route("Kraśnik",new ArrayList<>());
         Route chelm = new Route("Chełm",new ArrayList<>());
         Route leczna = new Route("Łęczna",new ArrayList<>());
 
@@ -94,6 +95,10 @@ public class LoadData implements CommandLineRunner {
         routeService.save(chelm);
         routeService.save(leczna);
 
+        routeService.findAll().forEach(System.out::println);
+
+
+        Coordinates lhKonwaliowaCoordinates = new Coordinates("51.274476", "22.666250");
 
         Client lhKonwaliowa = Client.builder()
                 .warehouseName("LH KONWALIOWA")
@@ -101,19 +106,17 @@ public class LoadData implements CommandLineRunner {
                 .nip("9462640744")
                 .info("Stajemy przy drodze. Towar nosimy do tylnego wejscia")
                 .address("Konwaliowa 7, 20-258 Turka")
+                .route(leczna)
+                .coordinates(lhKonwaliowaCoordinates)
                 .build();
 
-        lublin.getClient().add(lhKonwaliowa);
-        lhKonwaliowa.setRoute(lublin);
-
-        Coordinates lhKonwaliowaCoordinates = new Coordinates("51.274476", "22.666250");
-
+        leczna.getClient().add(lhKonwaliowa);
         lhKonwaliowaCoordinates.setClient(lhKonwaliowa);
-
-        lhKonwaliowa.setCoordinates(lhKonwaliowaCoordinates);
 
         clientService.save(lhKonwaliowa);
 
+
+        Coordinates biuromixCoordinates = new Coordinates("51.305546", "22.881868");
 
         Client biuromix = Client.builder()
                 .warehouseName("Biuromix Łęczna")
@@ -121,24 +124,18 @@ public class LoadData implements CommandLineRunner {
                 .nip("7132688698")
                 .info("Wejscie od fruntu budynku")
                 .address("Partyzancka 3, 21-010 Łęczna")
+                .route(leczna)
+                .coordinates(biuromixCoordinates)
                 .build();
 
         lublin.getClient().add(biuromix);
-        biuromix.setRoute(leczna);
-
-
-
-        Coordinates biuromixCoordinates = new Coordinates("51.305546", "22.881868");
-
         biuromixCoordinates.setClient(biuromix);
-
-        biuromix.setCoordinates(biuromixCoordinates);
-
 
         clientService.save(biuromix);
 
 
 
+        Coordinates kominekCoordinates = new Coordinates("51.417314", "21.975474");
 
         Client kominek = Client.builder()
                 .warehouseName("KOMINEK")
@@ -146,21 +143,17 @@ public class LoadData implements CommandLineRunner {
                 .nip("7162696389")
                 .info("Glowne wejscie, na lewo schody w dol. Towar stawiamy przy lodowkach")
                 .address("Wojska Polskiego 8B, 24-100 Pulawy")
+                .route(pulawy)
+                .coordinates(kominekCoordinates)
                 .build();
 
-        lublin.getClient().add(kominek);
-        kominek.setRoute(leczna);
-
-
-
-        Coordinates kominekCoordinates = new Coordinates("51.417314", "21.975474");
-
+        pulawy.getClient().add(kominek);
         kominekCoordinates.setClient(kominek);
 
-        kominek.setCoordinates(kominekCoordinates);
-
-
         clientService.save(kominek);
+
+
+        Coordinates ph1Coordinates = new Coordinates("51.138164", "23.495130");
 
         Client ph1 = Client.builder()
                 .warehouseName("PH1")
@@ -168,16 +161,15 @@ public class LoadData implements CommandLineRunner {
                 .nip("5632423737")
                 .info("Podjezdzamy od tylu pod rampe, ukladamy towar na paletach i wprowadzamy palety do srodka. Dziewczyny sprawdzaja, a po podpis idziemy waskim korytarzem do biura po lewej stronie")
                 .address("al. Piłsudskiego 26, 22-100 Chełm")
+                .route(chelm)
+                .coordinates(ph1Coordinates)
                 .build();
 
         lublin.getClient().add(ph1);
-        ph1.setRoute(leczna);
-
-        Coordinates ph1Coordinates = new Coordinates("51.138164", "23.495130",ph1);
-
-        ph1.setCoordinates(ph1Coordinates);
+        ph1Coordinates.setClient(ph1);
 
         clientService.save(ph1);
+
 
 
         List<Client> clients = clientService.findAll();
@@ -383,6 +375,7 @@ public class LoadData implements CommandLineRunner {
 
         Delivery dostawaZUlexu = Delivery.builder()
                 .dealer(ulex)
+                .creationTime(LocalDateTime.now())
                 .deliveryOk(true)
                 .info("Dostawa przyjechała z jedną uszkodzoną paletą jednak towar był kompletny")
                 .picker(employeeSerivce.findById(1L).orElse(null))
@@ -418,8 +411,13 @@ public class LoadData implements CommandLineRunner {
         dostawaZUlexu.setProductsInDelivery(Arrays.asList(kopertaNaFrytki,foliaAluminiowa,kartonNaPizze));
 
 
-        deliveryService.save(dostawaZUlexu);
+        Delivery savedDelivery = deliveryService.save(dostawaZUlexu);
         deliveryService.findAll().forEach(System.out::println);
+
+
+        System.out.println();
+        System.out.println();
+
 
 
 

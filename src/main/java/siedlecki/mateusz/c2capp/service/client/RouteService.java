@@ -11,34 +11,45 @@ import java.util.Optional;
 @Service
 public class RouteService implements SimpleService<Route,Long> {
 
-    private final RouteRepository routeRepository;
+    private final RouteRepository repository;
 
-    public RouteService(RouteRepository routeRepository) {
-        this.routeRepository = routeRepository;
+    public RouteService(RouteRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public List<Route> findAll() {
-        return routeRepository.findAll();
+        return repository.findAll();
     }
 
     @Override
     public Optional<Route> findById(Long aLong) {
-        return routeRepository.findById(aLong);
+        return repository.findById(aLong);
+    }
+
+    public Optional<Route> findByNameContains(String name){
+        if (name.length()>0){
+            name = name.toLowerCase();
+            name = name.substring(0,1).toUpperCase() +name.substring(1);
+            return repository.findByName(name);
+        }
+
+        return Optional.empty();
+
     }
 
     @Override
     public Route save(Route route) {
-        return routeRepository.save(route);
+        return repository.save(route);
     }
 
     @Override
     public void delete(Route obj) {
-        routeRepository.delete(obj);
+        repository.delete(obj);
     }
 
     @Override
     public void deleteById(Long aLong) {
-        routeRepository.deleteById(aLong);
+        repository.deleteById(aLong);
     }
 }

@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Product</title>
+
+    <style>
+        button{
+            margin: 5px;
+        }
+    </style>
 </head>
 <body>
 <div th:if="${client != null}">
@@ -14,8 +20,10 @@
     <p th:text="${client.coordinates.x}"></p>
     <p th:text="${client.coordinates.y}"></p>
     <p th:text="${client.info}"></p>
-    <p th:text="${client.route}"></p>
+    <p th:text="${client.route.name}"></p>
 
+    <a href="#" th:href="'/clients/edit/'+${client.id}"><button type="button">EDYTUJ</button></a>
+    <a href="#" th:href="'/clients/remove/'+${client.id}"><button type="button">USUŃ</button></a>
 </div>
     <p th:if="${client == null}"> Nie ma takiego użytkownika</p>
 </body>
