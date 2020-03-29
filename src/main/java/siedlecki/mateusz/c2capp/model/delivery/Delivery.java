@@ -42,10 +42,10 @@ public class Delivery extends BaseEntity {
 
 
     @Builder
-    public Delivery(Long id, Dealer dealer, Supplier supplier, Boolean deliveryOk, Employee picker, String info
+    public Delivery(Long id, LocalDateTime creationTime, Dealer dealer, Supplier supplier, Boolean deliveryOk, Employee picker, String info
             , List<ProductInDelivery> productsInDelivery) {
         super(id);
-        this.creationTime = LocalDateTime.now();
+        this.creationTime = creationTime;
         this.dealer = dealer;
         this.supplier = supplier;
         this.deliveryOk = deliveryOk;

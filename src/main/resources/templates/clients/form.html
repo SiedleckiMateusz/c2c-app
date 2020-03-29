@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formularz</title>
+
+    <style>
+        .my_form{
+            width: 200px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .form-text{
+            margin: 5px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="my_form">
+    <h1>Formularz</h1>
+    <form class="form" th:method="${method}" method="post" th:action="${action}" action="#">
+        <input class="form-text" type="text" placeholder="nazwa magazynowa" name="warehouseName">
+        <input class="form-text" type="text" placeholder="nazwa rzeczywista" name="realName">
+        <input class="form-text" type="text" placeholder="nip" name="nip">
+        <input class="form-text" type="text" placeholder="współrzędna x" name="x">
+        <input class="form-text" type="text" placeholder="współrzędna y" name="y">
+        <input class="form-text" type="text" placeholder="dodatkowe informacje" name="info">
+        <button class="ui-button" type="submit">Prześlij</button>
+    </form>
+</div>
+
+
+</body>
+</html>

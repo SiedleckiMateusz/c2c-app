@@ -20,7 +20,6 @@ import siedlecki.mateusz.c2capp.service.client.ClientService;
 import siedlecki.mateusz.c2capp.service.client.RouteService;
 import siedlecki.mateusz.c2capp.service.delivery.DealerService;
 import siedlecki.mateusz.c2capp.service.delivery.DeliveryService;
-import siedlecki.mateusz.c2capp.service.delivery.ProductInDeliveryService;
 import siedlecki.mateusz.c2capp.service.delivery.SupplierService;
 import siedlecki.mateusz.c2capp.service.employee.DepartmentService;
 import siedlecki.mateusz.c2capp.service.employee.EmployeeSerivce;
@@ -52,10 +51,13 @@ public class LoadData implements CommandLineRunner {
     private final UnitService unitService;
     private final DealerService dealerService;
     private final DeliveryService deliveryService;
-    private final ProductInDeliveryService productInDeliveryService;
     private final SupplierService supplierService;
 
-    public LoadData(ClientService clientService, RouteService routeService, EmployeeSerivce employeeSerivce, DepartmentService departmentService, WorkPositionService workPositionService, LocationService locationService, ProductFlagService productFlagService, ProductService productService, UnitService unitService, DealerService dealerService, DeliveryService deliveryService, ProductInDeliveryService productInDeliveryService, SupplierService supplierService) {
+    public LoadData(ClientService clientService, RouteService routeService, EmployeeSerivce employeeSerivce
+            , DepartmentService departmentService, WorkPositionService workPositionService
+            , LocationService locationService, ProductFlagService productFlagService
+            , ProductService productService, UnitService unitService, DealerService dealerService
+            , DeliveryService deliveryService, SupplierService supplierService) {
 
         this.clientService = clientService;
         this.routeService = routeService;
@@ -68,7 +70,6 @@ public class LoadData implements CommandLineRunner {
         this.unitService = unitService;
         this.dealerService = dealerService;
         this.deliveryService = deliveryService;
-        this.productInDeliveryService = productInDeliveryService;
         this.supplierService = supplierService;
     }
 
@@ -412,6 +413,7 @@ public class LoadData implements CommandLineRunner {
                 .unit(opakowanie)
                 .delivery(dostawaZUlexu)
                 .build();
+
 
         dostawaZUlexu.setProductsInDelivery(Arrays.asList(kopertaNaFrytki,foliaAluminiowa,kartonNaPizze));
 
