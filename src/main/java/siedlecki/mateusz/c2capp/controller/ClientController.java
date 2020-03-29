@@ -8,7 +8,6 @@ import siedlecki.mateusz.c2capp.model.client.Client;
 import siedlecki.mateusz.c2capp.model.client.Coordinates;
 import siedlecki.mateusz.c2capp.model.client.Route;
 import siedlecki.mateusz.c2capp.service.client.ClientService;
-import siedlecki.mateusz.c2capp.service.client.CoordinatesService;
 import siedlecki.mateusz.c2capp.service.client.RouteService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -23,13 +22,11 @@ public class ClientController {
 
     private final ClientService clientService;
     private final RouteService routeService;
-    private final CoordinatesService coordinatesService;
 
 
-    public ClientController(ClientService clientService, RouteService routeService, CoordinatesService coordinatesService) {
+    public ClientController(ClientService clientService, RouteService routeService) {
         this.clientService = clientService;
         this.routeService = routeService;
-        this.coordinatesService = coordinatesService;
     }
 
     @GetMapping({"/",""})
