@@ -10,9 +10,10 @@ import siedlecki.mateusz.c2capp.model.client.Route;
 import siedlecki.mateusz.c2capp.service.client.ClientService;
 import siedlecki.mateusz.c2capp.service.client.RouteService;
 
+import javax.servlet.SessionTrackingMode;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Optional;
+import java.util.*;
 
 
 @Slf4j
@@ -31,7 +32,18 @@ public class ClientController {
 
     @GetMapping({"/",""})
     public String getAll(Model model){
-        model.addAttribute("clients",clientService.findAll());
+        List<Client> clients = clientService.findAll();
+        model.addAttribute("clients",clients);
+
+        List<String> cords = new ArrayList<>();
+
+        for (Client client : clients) {
+            cords.add(client.getId()+" "+client.getWarehouseName()+" "+client.getCoordinates().getX()+" "+client.getCoordinates().getY());
+        }
+
+        model.addAttribute("coords",cords);
+
+
 
         return "clients/index";
     }

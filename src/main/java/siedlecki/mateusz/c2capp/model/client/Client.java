@@ -1,5 +1,6 @@
 package siedlecki.mateusz.c2capp.model.client;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ public class Client extends BaseEntity {
     private String address;
 
     @OneToOne(mappedBy = "client",cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Coordinates coordinates;
 
     private String info;
