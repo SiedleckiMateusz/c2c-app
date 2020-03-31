@@ -36,13 +36,7 @@ public class ClientController {
         List<Client> clients = clientService.findAll();
         model.addAttribute("clients",clients);
 
-        List<String> cords = new ArrayList<>();
-
-        for (Client client : clients) {
-            cords.add(client.getId()+";"+client.getWarehouseName()+";"+client.getCoordinates().getX()+";"+client.getCoordinates().getY());
-        }
-
-        model.addAttribute("coords",cords);
+        model.addAttribute("coords",getCoordinatesForMap(clients));
 
         return "clients/index";
     }
@@ -55,9 +49,8 @@ public class ClientController {
             client = clientService.findById(Long.parseLong(id)).orElse(null);
 
         }catch (NumberFormatException e){
-            log.error("Nieprawidłowy format wartości");
+            log.error("Nieprawidłowy format wartości Long");
         }
-
 
         model.addAttribute("client",client);
         log.info("Zwracam stronę detalis.html z obiektem: "+client);
@@ -115,7 +108,7 @@ public class ClientController {
                              ) throws IOException {
 
 
-        Optional<Route> routeOptional = routeService.findByNameContains(routeString);
+        Optional<Route> routeOptional = routeService.findByName(routeString);
         Route route = routeOptional.orElseGet(() -> routeService.save(new Route(routeString)));
 
 
@@ -148,13 +141,26 @@ public class ClientController {
             log.info("Id is null!");
         }
 
-        route.getClient().add(client);
+        route.getClients().add(client);
 
         coordinates.setClient(client);
 
         clientService.save(client);
 
         response.sendRedirect("/clients");
+    }
+
+
+
+
+    private List<String> getCoordinatesForMap(List<Client> clients){
+        List<String> coordinations = new ArrayList<>();
+
+        for (Client client : clients) {
+            coordinations.add(client.getId()+";"+client.getWarehouseName()+";"+client.getCoordinates().getX()+";"+client.getCoordinates().getY());
+        }
+
+        return coordinations;
     }
 
 

@@ -27,7 +27,7 @@ public class RouteService implements SimpleService<Route,Long> {
         return repository.findById(aLong);
     }
 
-    public Optional<Route> findByNameContains(String name){
+    public Optional<Route> findByName(String name){
         if (name.length()>0){
             name = name.toLowerCase();
             name = name.substring(0,1).toUpperCase() +name.substring(1);

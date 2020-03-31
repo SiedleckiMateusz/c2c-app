@@ -110,7 +110,7 @@ public class LoadData implements CommandLineRunner {
                 .coordinates(lhKonwaliowaCoordinates)
                 .build();
 
-        leczna.getClient().add(lhKonwaliowa);
+        leczna.getClients().add(lhKonwaliowa);
         lhKonwaliowaCoordinates.setClient(lhKonwaliowa);
 
         clientService.save(lhKonwaliowa);
@@ -128,7 +128,7 @@ public class LoadData implements CommandLineRunner {
                 .coordinates(biuromixCoordinates)
                 .build();
 
-        lublin.getClient().add(biuromix);
+        lublin.getClients().add(biuromix);
         biuromixCoordinates.setClient(biuromix);
 
         clientService.save(biuromix);
@@ -147,7 +147,7 @@ public class LoadData implements CommandLineRunner {
                 .coordinates(kominekCoordinates)
                 .build();
 
-        pulawy.getClient().add(kominek);
+        pulawy.getClients().add(kominek);
         kominekCoordinates.setClient(kominek);
 
         clientService.save(kominek);
@@ -165,7 +165,7 @@ public class LoadData implements CommandLineRunner {
                 .coordinates(ph1Coordinates)
                 .build();
 
-        lublin.getClient().add(ph1);
+        lublin.getClients().add(ph1);
         ph1Coordinates.setClient(ph1);
 
         clientService.save(ph1);

@@ -27,7 +27,7 @@ public class Route extends BaseEntity {
     private String name;
 
     @OneToMany(mappedBy = "route")
-    private List<Client> client = new ArrayList<>();
+    private List<Client> clients = new ArrayList<>();
 
     public Route(String name) {
         this.name = name;
