@@ -75,7 +75,7 @@
                 zoomOffset: -1
             }).addTo(mymap);
 
-            let myClients = /*[[${coords}]]*/ null;
+            let myClients = /*[[${coords}]]*/ [];
 
             myClients.forEach(cord => {
                 let myCord = cord.split(";");
@@ -96,7 +96,7 @@
                 function onMapClick(e) {
                     popup
                         .setLatLng(e.latlng)
-                        .setContent("Wybrany punkt " + e.latlng.toString())
+                        .setContent("[" + e.latlng.lat+";"+e.latlng.lng+"]"+'<br/><a href="/clients/new/'+e.latlng.lat+'-'+e.latlng.lng+'">Dodaj tutaj punkt</a>')
                         .openOn(mymap);
                 }
 

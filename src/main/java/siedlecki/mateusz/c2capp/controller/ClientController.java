@@ -68,8 +68,20 @@ public class ClientController {
 
     @RequestMapping("/new")
     public String newClient(Model model){
-        model.addAttribute("method","post");
-        model.addAttribute("action","/clients");
+
+        return "clients/form";
+    }
+
+    @RequestMapping("/new/{pathCoordinates}")
+    public String newClientWithCoordinates(Model model,@PathVariable String pathCoordinates){
+
+        String[] coordinatesTab = pathCoordinates.split("-");
+
+        Coordinates coordinates = new Coordinates(coordinatesTab[0],coordinatesTab[1]);
+
+        Client client = Client.builder().coordinates(coordinates).build();
+
+        model.addAttribute("client",client);
 
         return "clients/form";
     }
@@ -78,7 +90,6 @@ public class ClientController {
     public String editClient(Model model, @PathVariable String id){
 
         model.addAttribute("client",clientService.findById(Long.parseLong(id)).orElse(null));
-
 
         return "clients/form";
     }
@@ -116,9 +127,9 @@ public class ClientController {
         try {
             coordinates.setId(Long.parseLong(coordinateId));
         }catch (NumberFormatException e){
-            log.error("Coordinate id is not a number!");
+            log.info("Coordinate id is not a number!");
         }catch (NullPointerException e){
-            log.error("Coordinate id is null!");
+            log.info("Coordinate id is null!");
         }
 
         Client client = Client.builder()
@@ -134,9 +145,9 @@ public class ClientController {
         try {
             client.setId(Long.parseLong(id));
         }catch (NumberFormatException e){
-            log.error("Id is not a number!");
+            log.info("Id is not a number!");
         }catch (NullPointerException e){
-            log.error("Id is null!");
+            log.info("Id is null!");
         }
 
         route.getClient().add(client);
