@@ -2,6 +2,7 @@ package siedlecki.mateusz.c2capp.model.delivery;
 
 import lombok.*;
 import siedlecki.mateusz.c2capp.model.BaseEntity;
+import siedlecki.mateusz.c2capp.model.BaseProductIn;
 import siedlecki.mateusz.c2capp.model.product.Product;
 import siedlecki.mateusz.c2capp.model.product.Unit;
 
@@ -15,36 +16,16 @@ import javax.persistence.OneToOne;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class ProductInDelivery extends BaseEntity {
-
-    @OneToOne
-    private Product product;
+public class ProductInDelivery extends BaseProductIn {
 
     @ManyToOne
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
-    private Float quantity;
-
-    @ManyToOne
-    @JoinColumn(name = "unit_id")
-    private Unit unit;
-
     @Builder
-    public ProductInDelivery(Product product, Float quantity, Unit unit,Delivery delivery) {
-        this.product = product;
-        this.quantity = quantity;
-        this.unit = unit;
+    public ProductInDelivery(Long id, Product product, Float quantity, Unit unit,Delivery delivery) {
+        super(id,product,quantity,unit);
         this.delivery = delivery;
     }
 
-    @Override
-    public String toString() {
-        return "ProductInDelivery{" +
-                "id=" + getId() +
-                ", product=" + product +
-                ", quantity=" + quantity +
-                ", unit=" + unit +
-                '}';
-    }
 }

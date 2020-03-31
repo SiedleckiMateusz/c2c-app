@@ -96,7 +96,7 @@
                 function onMapClick(e) {
                     popup
                         .setLatLng(e.latlng)
-                        .setContent("[" + e.latlng.lat+";"+e.latlng.lng+"]"+'<br/><a href="/clients/new/'+e.latlng.lat+'-'+e.latlng.lng+'">Dodaj tutaj punkt</a>')
+                        .setContent('<a href="/clients/new/'+e.latlng.lat+'_'+e.latlng.lng+'">Dodaj tutaj punkt</a>')
                         .openOn(mymap);
                 }
 
@@ -107,7 +107,3 @@
 
 </body>
 </html>
-
-<!--
-
-            -->

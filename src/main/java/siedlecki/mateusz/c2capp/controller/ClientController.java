@@ -44,8 +44,6 @@ public class ClientController {
 
         model.addAttribute("coords",cords);
 
-
-
         return "clients/index";
     }
 
@@ -75,7 +73,7 @@ public class ClientController {
     @RequestMapping("/new/{pathCoordinates}")
     public String newClientWithCoordinates(Model model,@PathVariable String pathCoordinates){
 
-        String[] coordinatesTab = pathCoordinates.split("-");
+        String[] coordinatesTab = pathCoordinates.split("_");
 
         Coordinates coordinates = new Coordinates(coordinatesTab[0],coordinatesTab[1]);
 

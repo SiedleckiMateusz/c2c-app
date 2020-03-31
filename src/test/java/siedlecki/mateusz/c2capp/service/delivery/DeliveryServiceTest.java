@@ -34,7 +34,6 @@ class DeliveryServiceTest {
     void setUp() {
         someDelivery = Delivery.builder()
                 .id(1L)
-                .deliveryOk(true)
                 .creationTime(LocalDateTime.now())
                 .dealer(new Dealer("Ulex","52443211"))
                 .supplier(new Supplier("Pekaes"))

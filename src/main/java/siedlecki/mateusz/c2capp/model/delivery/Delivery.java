@@ -29,8 +29,6 @@ public class Delivery extends BaseEntity {
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
 
-    private Boolean deliveryOk;
-
     @ManyToOne
     @JoinColumn(name = "picker_id")
     private Employee picker;
@@ -42,13 +40,12 @@ public class Delivery extends BaseEntity {
 
 
     @Builder
-    public Delivery(Long id, LocalDateTime creationTime, Dealer dealer, Supplier supplier, Boolean deliveryOk, Employee picker, String info
-            , List<ProductInDelivery> productsInDelivery) {
+    public Delivery(Long id, LocalDateTime creationTime, Dealer dealer, Supplier supplier
+            , Employee picker, String info, List<ProductInDelivery> productsInDelivery) {
         super(id);
         this.creationTime = creationTime;
         this.dealer = dealer;
         this.supplier = supplier;
-        this.deliveryOk = deliveryOk;
         this.picker = picker;
         this.info = info;
         this.productsInDelivery = productsInDelivery;
@@ -61,7 +58,6 @@ public class Delivery extends BaseEntity {
                 ", creationTime=" + creationTime +
                 ", dealer=" + dealer +
                 ", supplier=" + supplier +
-                ", deliveryOk=" + deliveryOk +
                 ", picker=" + picker +
                 ", info='" + info + '\'' +
                 ", productsInDelivery=" + productsInDelivery +
