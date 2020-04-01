@@ -31,7 +31,7 @@ public class ClientController {
         this.routeService = routeService;
     }
 
-    @GetMapping({"/",""})
+    @RequestMapping({"/",""})
     public String getAll(Model model){
         List<Client> clients = clientService.findAll();
         model.addAttribute("clients",clients);
@@ -39,6 +39,22 @@ public class ClientController {
         model.addAttribute("coords",getCoordinatesForMap(clients));
 
         return "clients/index";
+    }
+
+    @GetMapping({"/find","/"})
+    public String findByText(Model model, @RequestParam(name = "text") String text){
+        List<Client> resultsList = new ArrayList<>();
+
+        if (text != null){
+            resultsList = clientService.findAllByRealNameContainsOrWarehouseNameContainsOrAddressContains(text);
+        }
+
+        model.addAttribute("clients",resultsList);
+
+        model.addAttribute("coords",getCoordinatesForMap(resultsList));
+
+        return "clients/index";
+
     }
 
     @RequestMapping({"/{id}"})

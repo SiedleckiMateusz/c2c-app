@@ -13,6 +13,7 @@
             integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
             crossorigin=""></script>
 
+
     <style>
         table,th,tr,td{
             border: 1px solid black;
@@ -35,12 +36,23 @@
             margin-left: auto;
             margin-right: auto;
         }
+        form{
+            margin: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="content">
         <h1>Client list</h1>
+
+
+        <form method="get" action="/clients/find">
+            <input type="text" placeholder="Wyszukaj" name="text">
+            <button type="submit">Wyszukaj</button>
+        </form>
+
         <a href="/clients/new"><button type="button">Nowy klient</button></a>
+
         <table>
             <tr>
                 <th>Nazwa magazynowa</th>

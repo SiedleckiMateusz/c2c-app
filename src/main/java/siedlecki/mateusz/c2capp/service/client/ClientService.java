@@ -17,7 +17,6 @@ public class ClientService implements SimpleService<Client,Long> {
         this.clientRepository = clientRepository;
     }
 
-
     @Override
     public List<Client> findAll() {
         return clientRepository.findAll();
@@ -41,5 +40,9 @@ public class ClientService implements SimpleService<Client,Long> {
     @Override
     public void deleteById(Long aLong) {
         clientRepository.deleteById(aLong);
+    }
+
+    public List<Client> findAllByRealNameContainsOrWarehouseNameContainsOrAddressContains(String text){
+        return clientRepository.findAllByRealNameContainsOrWarehouseNameContainsOrAddressContains(text,text,text);
     }
 }
