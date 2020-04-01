@@ -19,7 +19,7 @@ import java.util.List;
 @Entity
 public class Delivery extends BaseEntity {
 
-    private LocalDateTime creationTime;
+    private LocalDateTime created;
 
     @ManyToOne
     @JoinColumn(name = "dealer_id")
@@ -40,10 +40,10 @@ public class Delivery extends BaseEntity {
 
 
     @Builder
-    public Delivery(Long id, LocalDateTime creationTime, Dealer dealer, Supplier supplier
+    public Delivery(Long id, LocalDateTime created, Dealer dealer, Supplier supplier
             , Employee picker, String info, List<ProductInDelivery> productsInDelivery) {
         super(id);
-        this.creationTime = creationTime;
+        this.created = created;
         this.dealer = dealer;
         this.supplier = supplier;
         this.picker = picker;
@@ -55,7 +55,7 @@ public class Delivery extends BaseEntity {
     public String toString() {
         return "Delivery{" +
                 "id=" + getId() +
-                ", creationTime=" + creationTime +
+                ", created=" + created +
                 ", dealer=" + dealer +
                 ", supplier=" + supplier +
                 ", picker=" + picker +

@@ -46,7 +46,7 @@ public class ClientController {
         List<Client> resultsList = new ArrayList<>();
 
         if (text != null){
-            resultsList = clientService.findAllByRealNameContainsOrWarehouseNameContainsOrAddressContains(text);
+            resultsList = clientService.findAllBySentence(text);
         }
 
         model.addAttribute("clients",resultsList);
@@ -74,7 +74,7 @@ public class ClientController {
     }
 
     @RequestMapping("/new")
-    public String newClient(Model model){
+    public String newClient(){
 
         return "clients/form";
     }
@@ -123,11 +123,8 @@ public class ClientController {
             , @RequestParam("nip") String nip
                              ) throws IOException {
 
-
         Optional<Route> routeOptional = routeService.findByName(routeString);
         Route route = routeOptional.orElseGet(() -> routeService.save(new Route(routeString)));
-
-
 
         Coordinates coordinates  = new Coordinates(x,y);
 

@@ -375,7 +375,7 @@ public class LoadData implements CommandLineRunner {
 
         Delivery dostawaZUlexu = Delivery.builder()
                 .dealer(ulex)
-                .creationTime(LocalDateTime.now())
+                .created(LocalDateTime.now())
                 .info("Dostawa przyjechała z jedną uszkodzoną paletą jednak towar był kompletny")
                 .picker(employeeSerivce.findById(1L).orElse(null))
                 .supplier(pekaes)

@@ -7,6 +7,7 @@ import siedlecki.mateusz.c2capp.service.SimpleService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ClientService implements SimpleService<Client,Long> {
@@ -42,7 +43,20 @@ public class ClientService implements SimpleService<Client,Long> {
         clientRepository.deleteById(aLong);
     }
 
-    public List<Client> findAllByRealNameContainsOrWarehouseNameContainsOrAddressContains(String text){
-        return clientRepository.findAllByRealNameContainsOrWarehouseNameContainsOrAddressContains(text,text,text);
+    public List<Client> findAllBySentence(String text){
+        List<Client> all = clientRepository.findAll();
+
+        final String sentence =  text.toLowerCase();
+
+
+        return all.stream().filter(client ->
+                        client.getRealName().toLowerCase().contains(sentence) ||
+                        client.getWarehouseName().toLowerCase().contains(sentence) ||
+                        client.getAddress().toLowerCase().contains(sentence) ||
+                        client.getNip().toLowerCase().contains(sentence) ||
+                        client.getRoute().getName().toLowerCase().contains(sentence) ||
+                        client.getNip().toLowerCase().contains(sentence) ||
+                        client.getInfo().toLowerCase().contains(sentence)
+                ).collect(Collectors.toList());
     }
 }

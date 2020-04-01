@@ -39,6 +39,14 @@
         form{
             margin: 10px;
         }
+        tr:hover{
+            background-color: #e7e7e7;
+        }
+
+        .message{
+            color: red;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -53,7 +61,7 @@
 
         <a href="/clients/new"><button type="button">Nowy klient</button></a>
 
-        <table>
+        <table th:if="${!clients.isEmpty()}">
             <tr>
                 <th>Nazwa magazynowa</th>
                 <th>Nazwa rzeczywista</th>
@@ -67,9 +75,11 @@
                 <td th:text="${client.nip}">nip-nip-nip</td>
                 <td th:text="${client.address}">Moja ulica 21, Moje miasto</td>
                 <td><a href="#" th:href="'/clients/'+${client.id}">More...</a> </td>
-
             </tr>
         </table>
+
+
+        <p th:unless="${!clients.isEmpty()}" class="message">Brak znalezionych klientów...</p>
 
         <div id="mapid">tutaj powinna być mapa</div>
 
