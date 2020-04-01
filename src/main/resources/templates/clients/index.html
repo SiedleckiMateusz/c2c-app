@@ -50,7 +50,7 @@
     </style>
 </head>
 <body>
-    <div class="content">
+    <div th:if="clients != null" class="content">
         <h1>Client list</h1>
 
 
@@ -61,7 +61,8 @@
 
         <a href="/clients/new"><button type="button">Nowy klient</button></a>
 
-        <table th:if="${!clients.isEmpty()}">
+
+        <table th:if="${!clients?.isEmpty()}">
             <tr>
                 <th>Nazwa magazynowa</th>
                 <th>Nazwa rzeczywista</th>
@@ -78,8 +79,7 @@
             </tr>
         </table>
 
-
-        <p th:unless="${!clients.isEmpty()}" class="message">Brak znalezionych klientów...</p>
+        <p th:unless="${!clients?.isEmpty()}" class="message">Brak znalezionych klientów...</p>
 
         <div id="mapid">tutaj powinna być mapa</div>
 

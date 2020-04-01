@@ -111,16 +111,16 @@ public class ClientController {
 
     @RequestMapping(value = {"/",""}, method = RequestMethod.POST)
     public void addNewClient(HttpServletResponse response
-            , @RequestParam("warehouseName") String warehouseName
-            , @RequestParam("id") String id
-            , @RequestParam("coordinate_id") String coordinateId
-            , @RequestParam("realName") String realName
-            , @RequestParam("x") String x
-            , @RequestParam("y") String y
-            , @RequestParam("info") String info
-            , @RequestParam("route") String routeString
-            , @RequestParam("address") String address
-            , @RequestParam("nip") String nip
+            , @RequestParam("client.warehouseName") String warehouseName
+            , @RequestParam("client.id") String id
+            , @RequestParam("coordinates.id") String coordinateId
+            , @RequestParam("client.realName") String realName
+            , @RequestParam("coordinates.x") String x
+            , @RequestParam("coordinates.y") String y
+            , @RequestParam("client.info") String info
+            , @RequestParam("client.route") String routeString
+            , @RequestParam("client.address") String address
+            , @RequestParam("client.nip") String nip
                              ) throws IOException {
 
         Optional<Route> routeOptional = routeService.findByName(routeString);
@@ -130,10 +130,8 @@ public class ClientController {
 
         try {
             coordinates.setId(Long.parseLong(coordinateId));
-        }catch (NumberFormatException e){
-            log.info("Coordinate id is not a number!");
-        }catch (NullPointerException e){
-            log.info("Coordinate id is null!");
+        }catch (NumberFormatException | NullPointerException e){
+            log.info("Coordinate not exist yet");
         }
 
         Client client = Client.builder()
@@ -148,10 +146,8 @@ public class ClientController {
 
         try {
             client.setId(Long.parseLong(id));
-        }catch (NumberFormatException e){
-            log.info("Id is not a number!");
-        }catch (NullPointerException e){
-            log.info("Id is null!");
+        }catch (NumberFormatException | NullPointerException e){
+            log.info("ICoordinate not exist yet");
         }
 
         route.getClients().add(client);
@@ -162,8 +158,6 @@ public class ClientController {
 
         response.sendRedirect("/clients");
     }
-
-
 
 
     private List<String> getCoordinatesForMap(List<Client> clients){

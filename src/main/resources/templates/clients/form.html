@@ -22,25 +22,25 @@
     <h1>Formularz</h1>
     <form class="form" method="post" action="/clients/">
         <input th:value="${client?.id != null ? client.id : null}"
-               name="id"  value="" type="hidden">
+               name="client.id"  value="" type="hidden">
         <input th:value="${client?.warehouseName == null ? '' : client.warehouseName}"
-               class="form-text" type="text" placeholder="nazwa magazynowa" name="warehouseName">
+               class="form-text" type="text" placeholder="nazwa magazynowa" name="client.warehouseName">
         <input th:value="${client?.realName == null ? '' : client.realName}"
-               class="form-text" type="text" placeholder="nazwa rzeczywista" name="realName">
+               class="form-text" type="text" placeholder="nazwa rzeczywista" name="client.realName">
         <input th:value="${client?.address == null ? '' : client.address}"
-               class="form-text" type="text" placeholder="adres" name="address">
+               class="form-text" type="text" placeholder="adres" name="client.address">
         <input th:value="${client?.nip == null ? '' : client.nip}"
-               class="form-text" type="text" placeholder="nip" name="nip">
+               class="form-text" type="text" placeholder="nip" name="client.nip">
         <input th:value="${client?.coordinates != null ? client.coordinates.id : null}"
-               type="hidden" name="coordinate_id" >
+               type="hidden" name="coordinates.id" >
         <input th:value="${client?.coordinates == null ? '' : client.coordinates.x}"
-               class="form-text" type="text" placeholder="współrzędna x" name="x">
+               class="form-text" type="text" placeholder="współrzędna x" name="coordinates.x">
         <input th:value="${client?.coordinates == null ? '' : client.coordinates.y}"
-               class="form-text" type="text" placeholder="współrzędna y" name="y">
+               class="form-text" type="text" placeholder="współrzędna y" name="coordinates.y">
         <input th:value="${client?.info == null ? '' : client.info}"
-               class="form-text" type="text" placeholder="dodatkowe informacje" name="info">
+               class="form-text" type="text" placeholder="dodatkowe informacje" name="client.info">
         <input th:value="${client?.route == null ? '' : client.route.name}"
-               class="form-text" type="text" placeholder="trasa" name="route">
+               class="form-text" type="text" placeholder="trasa" name="client.route">
         <button class="ui-button" type="submit">Prześlij</button>
     </form>
 </div>
