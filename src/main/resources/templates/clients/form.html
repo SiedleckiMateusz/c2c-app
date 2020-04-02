@@ -20,7 +20,7 @@
 <body>
 <div class="my_form">
     <h1>Formularz</h1>
-    <form class="form" method="post" action="/clients/">
+    <form class="form" method="post" action="/clients">
         <input th:value="${client?.id != null ? client.id : null}"
                name="client.id"  value="" type="hidden">
         <input th:value="${client?.warehouseName == null ? '' : client.warehouseName}"

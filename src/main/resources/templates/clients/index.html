@@ -19,18 +19,38 @@
             border: 1px solid black;
             border-spacing: inherit;
         }
+        table{
+            float: left;
+            width: 40%;
+        }
+        .navbar{
+            width: 100%;
+            padding: 5px;
+            background-color: darkgray;
+            text-align: center;
+        }
+        #myInput{
+            width: 300px;
+            padding: 10px;
+        }
+
+        h1{
+            float: left;
+        }
 
         button{
             margin: 5px;
+            padding: 10px;
         }
 
         .content{
-            width: 800px;
+            width: 100%;
             margin-left: auto;
             margin-right: auto;
         }
         #mapid{
-            width: 100%;
+            float: left;
+            width: 60%;
             height: 600px;
             margin-top: 10px;
             margin-left: auto;
@@ -38,7 +58,13 @@
         }
         form{
             margin: 10px;
+            float: right;
         }
+        #newClient{
+            float: right;
+            margin: 10px;
+        }
+
         tr:hover{
             background-color: #e7e7e7;
         }
@@ -51,18 +77,24 @@
 </head>
 <body>
     <div th:if="clients != null" class="content">
-        <h1>Client list</h1>
 
 
-        <form method="get" action="/clients/find">
-            <input type="text" placeholder="Wyszukaj" name="text">
-            <button type="submit">Wyszukaj</button>
-        </form>
 
-        <a href="/clients/new"><button type="button">Nowy klient</button></a>
+        <div class="navbar">
+            <h1>Client list</h1>
+            <form method="get" action="/clients/find">
+                <input id="myInput" onkeyup="myFunction()" type="text" placeholder="Wyszukaj" name="text">
+                <button type="submit" title="Szukaj">Wyszukaj</button>
+            </form>
+
+            <a id="newClient" href="/clients/new"><button type="button">Nowy klient</button></a>
+            <div style="clear: both;"></div>
+        </div>
 
 
-        <table th:if="${!clients?.isEmpty()}">
+        <div id="mapid">tutaj powinna być mapa</div>
+
+        <table id="myTable" th:if="${!clients?.isEmpty()}">
             <tr>
                 <th>Nazwa magazynowa</th>
                 <th>Nazwa rzeczywista</th>
@@ -80,8 +112,6 @@
         </table>
 
         <p th:unless="${!clients?.isEmpty()}" class="message">Brak znalezionych klientów...</p>
-
-        <div id="mapid">tutaj powinna być mapa</div>
 
         <script th:inline="javascript">
 
@@ -124,6 +154,36 @@
 
                 mymap.on('click', onMapClick);
             })
+
+
+
+
+            function myFunction() {
+                var input, filter, table, tr, td, i, txtValue;
+                input = document.getElementById("myInput");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("myTable");
+                tr = table.getElementsByTagName("tr");
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[0];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            td = tr[i].getElementsByTagName("td")[1];
+                            if (td) {
+                                txtValue = td.textContent || td.innerText;
+                                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                    tr[i].style.display = "";
+                                } else {
+                                    tr[i].style.display = "none";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         </script>
     </div>
 

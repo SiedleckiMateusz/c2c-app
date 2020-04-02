@@ -28,14 +28,10 @@ public class RouteService implements SimpleService<Route,Long> {
     }
 
     public Optional<Route> findByName(String name){
-        if (name.length()>0){
-            name = name.toLowerCase();
-            name = name.substring(0,1).toUpperCase() +name.substring(1);
-            return repository.findByName(name);
-        }
 
-        return Optional.empty();
+        List<Route> allRoutes = repository.findAll();
 
+        return allRoutes.stream().filter(route -> route.getName().toLowerCase().contains(name.toLowerCase())).findFirst();
     }
 
     @Override
