@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class ClientService implements SimpleService<Client,Long> {
+public class ClientService implements SimpleService<Client, Long> {
 
     private final ClientRepository clientRepository;
 
@@ -43,20 +43,44 @@ public class ClientService implements SimpleService<Client,Long> {
         clientRepository.deleteById(aLong);
     }
 
-    public List<Client> findAllBySentence(String text){
+    public List<Client> findAllBySentence(String text) {
         List<Client> all = clientRepository.findAll();
 
-        final String sentence =  text.toLowerCase();
+        final String sentence = text.toLowerCase();
 
 
-        return all.stream().filter(client ->
-                        client.getRealName().toLowerCase().contains(sentence) ||
-                        client.getWarehouseName().toLowerCase().contains(sentence) ||
-                        client.getAddress().toLowerCase().contains(sentence) ||
-                        client.getNip().toLowerCase().contains(sentence) ||
-                        client.getRoute().getName().toLowerCase().contains(sentence) ||
-                        client.getNip().toLowerCase().contains(sentence) ||
-                        client.getInfo().toLowerCase().contains(sentence)
-                ).collect(Collectors.toList());
+        return all.stream().filter(client -> {
+            if (client.getRealName() != null) {
+                if (client.getRealName().toLowerCase().contains(sentence)) {
+                    return true;
+                }
+            }
+
+            if (client.getWarehouseName() != null) {
+                if (client.getWarehouseName().toLowerCase().contains(sentence)) {
+                    return true;
+                }
+            }
+
+            if (client.getAddress() != null) {
+                if (client.getAddress().toLowerCase().contains(sentence)) {
+                    return true;
+                }
+            }
+
+            if (client.getNip() != null) {
+                if (client.getNip().toLowerCase().contains(sentence)) {
+                    return true;
+                }
+            }
+
+            if (client.getRoute() != null) {
+                if (client.getRoute().getName().toLowerCase().contains(sentence)) {
+                    return true;
+                }
+            }
+            return false;
+        }).collect(Collectors.toList());
     }
+
 }

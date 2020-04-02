@@ -27,6 +27,7 @@ public class Client extends BaseEntity {
     @JsonManagedReference
     private Coordinates coordinates;
 
+    @Lob
     private String info;
 
     @ManyToOne

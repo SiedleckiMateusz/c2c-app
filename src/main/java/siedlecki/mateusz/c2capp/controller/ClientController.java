@@ -131,7 +131,7 @@ public class ClientController {
         try {
             coordinates.setId(Long.parseLong(coordinateId));
         }catch (NumberFormatException | NullPointerException e){
-            log.info("Coordinate not exist yet");
+            log.info("IdCoordinate not exist yet");
         }
 
         Client client = Client.builder()
@@ -147,7 +147,7 @@ public class ClientController {
         try {
             client.setId(Long.parseLong(id));
         }catch (NumberFormatException | NullPointerException e){
-            log.info("ICoordinate not exist yet");
+            log.info("IdCoordinate not exist yet");
         }
 
         route.getClients().add(client);
@@ -164,7 +164,9 @@ public class ClientController {
         List<String> coordinations = new ArrayList<>();
 
         for (Client client : clients) {
-            coordinations.add(client.getId()+";"+client.getWarehouseName()+";"+client.getCoordinates().getX()+";"+client.getCoordinates().getY());
+            if (client.getCoordinates()!=null){
+                coordinations.add(client.getId()+";"+client.getWarehouseName()+";"+client.getCoordinates().getX()+";"+client.getCoordinates().getY());
+            }
         }
 
         return coordinations;
