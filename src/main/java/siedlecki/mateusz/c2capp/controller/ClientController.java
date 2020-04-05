@@ -8,6 +8,7 @@ import siedlecki.mateusz.c2capp.model.client.Client;
 import siedlecki.mateusz.c2capp.model.client.Coordinates;
 import siedlecki.mateusz.c2capp.model.client.Route;
 import siedlecki.mateusz.c2capp.service.client.ClientService;
+import siedlecki.mateusz.c2capp.service.client.CoordinatesService;
 import siedlecki.mateusz.c2capp.service.client.RouteService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -24,11 +25,13 @@ public class ClientController {
 
     private final ClientService clientService;
     private final RouteService routeService;
+    private final CoordinatesService coordinatesService;
 
 
-    public ClientController(ClientService clientService, RouteService routeService) {
+    public ClientController(ClientService clientService, RouteService routeService, CoordinatesService coordinatesService) {
         this.clientService = clientService;
         this.routeService = routeService;
+        this.coordinatesService = coordinatesService;
     }
 
     @RequestMapping({"/",""})
@@ -110,53 +113,35 @@ public class ClientController {
     }
 
     @RequestMapping(value = {"/",""}, method = RequestMethod.POST)
-    public void addNewClient(HttpServletResponse response
-            , @RequestParam("client.warehouseName") String warehouseName
-            , @RequestParam("client.id") String id
-            , @RequestParam("coordinates.id") String coordinateId
-            , @RequestParam("client.realName") String realName
-            , @RequestParam("coordinates.x") String x
-            , @RequestParam("coordinates.y") String y
-            , @RequestParam("client.info") String info
-            , @RequestParam("client.route") String routeString
-            , @RequestParam("client.address") String address
-            , @RequestParam("client.nip") String nip
-                             ) throws IOException {
+    public String addNewClient(@ModelAttribute Client client){
 
-        Optional<Route> routeOptional = routeService.findByName(routeString);
-        Route route = routeOptional.orElseGet(() -> routeService.save(new Route(routeString)));
+        Route route = null;
 
-        Coordinates coordinates  = new Coordinates(x,y);
+        if (!client.getRoute().getName().isEmpty()){
+            Optional<Route> routeOptional = routeService.findByName(client.getRoute().getName());
+            route = routeOptional.orElseGet(() -> routeService.save(new Route(client.getRoute().getName())));
 
-        try {
-            coordinates.setId(Long.parseLong(coordinateId));
-        }catch (NumberFormatException | NullPointerException e){
-            log.info("IdCoordinate not exist yet");
         }
 
-        Client client = Client.builder()
-                .warehouseName(warehouseName)
-                .realName(realName)
-                .info(info)
-                .address(address)
-                .nip(nip)
-                .coordinates(coordinates)
-                .route(route)
-                .build();
+        client.setRoute(route);
 
-        try {
-            client.setId(Long.parseLong(id));
-        }catch (NumberFormatException | NullPointerException e){
-            log.info("IdCoordinate not exist yet");
+        if (route != null){
+            route.getClients().add(client);
         }
 
-        route.getClients().add(client);
-
-        coordinates.setClient(client);
+        if (!client.getCoordinates().getX().isEmpty() && !client.getCoordinates().getY().isEmpty()){
+            client.getCoordinates().setClient(client);
+        }else {
+            if (client.getCoordinates().getId() != null){
+                coordinatesService.deleteById(client.getCoordinates().getId());
+            }
+            client.setCoordinates(null);
+        }
 
         clientService.save(client);
 
-        response.sendRedirect("/clients");
+
+        return "redirect:/clients";
     }
 
 

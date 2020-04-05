@@ -8,7 +8,6 @@ import siedlecki.mateusz.c2capp.model.BaseEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -36,6 +35,6 @@ public class Route extends BaseEntity {
 
     @Override
     public String toString() {
-        return "Route{"+name+"}";
+        return "Route{"+getId()+": "+name+"}";
     }
 }

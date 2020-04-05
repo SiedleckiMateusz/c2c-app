@@ -34,7 +34,9 @@ public class Coordinates extends BaseEntity {
 
     @Override
     public String toString() {
-        return "'" + x + '\'' +
+        return
+                "id=" + getId() + '\'' +
+                 "'" + x + '\'' +
                 ", '" + y + '\'';
     }
 }

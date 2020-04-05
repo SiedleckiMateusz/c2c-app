@@ -17,10 +17,10 @@
     <p th:text="${client.realName}"></p>
     <p th:text="${client.nip}"></p>
     <p th:text="${client.address}"></p>
-    <p th:text="${client.coordinates.x}"></p>
-    <p th:text="${client.coordinates.y}"></p>
+    <p th:text="${client.coordinates?.x}"></p>
+    <p th:text="${client.coordinates?.y}"></p>
     <p th:text="${client.info}"></p>
-    <p th:text="${client.route.name}"></p>
+    <p th:text="${client.route?.name}"></p>
 
     <a href="#" th:href="'/clients/edit/'+${client.id}"><button type="button">EDYTUJ</button></a>
     <a href="#" th:href="'/clients/remove/'+${client.id}"><button type="button">USUŃ</button></a>
