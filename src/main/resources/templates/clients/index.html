@@ -19,9 +19,11 @@
             border: 1px solid black;
             border-spacing: inherit;
         }
-        table{
+        .table{
             float: left;
             width: 40%;
+            height: 600px;
+            overflow: auto;
         }
         .navbar{
             width: 100%;
@@ -93,25 +95,27 @@
 
 
         <div id="mapid">tutaj powinna być mapa</div>
+        <div class="table">
+            <table id="myTable" th:if="${!clients?.isEmpty()}">
+                <tr>
+                    <form method="get" action="/clients/find">
+                        <th><a href="/clients?sortBy=warehouseName">Nazwa magazynowa</a></th>
+                        <th><a href="/clients?sortBy=realName">Nazwa rzeczywista</a></th>
+                        <th><a href="/clients?sortBy=address">Adres</a></th>
+                        <th>More...</th>
+                    </form>
+                </tr>
+                <tr th:each="client : ${clients}">
+                    <td th:text="${client.warehouseName}">Moja nazwa</td>
+                    <td th:text="${client.realName}">Tak się na prawdę nazywam</td>
+                    <td th:text="${client.address}">Moja ulica 21, Moje miasto</td>
+                    <td><a href="#" th:href="'/clients/'+${client.id}">More...</a> </td>
+                </tr>
+            </table>
 
-        <table id="myTable" th:if="${!clients?.isEmpty()}">
-            <tr>
-                <th>Nazwa magazynowa</th>
-                <th>Nazwa rzeczywista</th>
-                <th>NIP</th>
-                <th>Adres</th>
-                <th>More...</th>
-            </tr>
-            <tr th:each="client : ${clients}">
-                <td th:text="${client.warehouseName}">Moja nazwa</td>
-                <td th:text="${client.realName}">Tak się na prawdę nazywam</td>
-                <td th:text="${client.nip}">nip-nip-nip</td>
-                <td th:text="${client.address}">Moja ulica 21, Moje miasto</td>
-                <td><a href="#" th:href="'/clients/'+${client.id}">More...</a> </td>
-            </tr>
-        </table>
+            <p th:unless="${!clients?.isEmpty()}" class="message">Brak znalezionych klientów...</p>
+        </div>
 
-        <p th:unless="${!clients?.isEmpty()}" class="message">Brak znalezionych klientów...</p>
 
         <script th:inline="javascript">
 
@@ -132,7 +136,6 @@
             myClients.forEach(cord => {
                 let myCord = cord.split(";");
 
-
                 console.log("ID: "+myCord[0]);
                 console.log("Name: "+myCord[1]);
                 console.log("X: "+myCord[2]);
@@ -140,8 +143,6 @@
 
 
                 L.marker([myCord[2], myCord[3]]).addTo(mymap).bindPopup('<a href="/clients/'+myCord[0]+'">'+myCord[1]+'</a>');
-
-
 
                 var popup = L.popup();
 
@@ -153,13 +154,14 @@
                 }
 
                 mymap.on('click', onMapClick);
-            })
+
+            });
 
 
 
 
             function myFunction() {
-                var input, filter, table, tr, td, i, txtValue;
+                let input, filter, table, tr, td, i, txtValue;
                 input = document.getElementById("myInput");
                 filter = input.value.toUpperCase();
                 table = document.getElementById("myTable");

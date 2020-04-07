@@ -14,6 +14,7 @@ import siedlecki.mateusz.c2capp.service.client.RouteService;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +35,7 @@ public class ClientController {
         this.coordinatesService = coordinatesService;
     }
 
-    @RequestMapping({"/",""})
+    @RequestMapping(value = {"/"}, method = RequestMethod.GET)
     public String getAll(Model model){
         List<Client> clients = clientService.findAll();
         model.addAttribute("clients",clients);
@@ -44,7 +45,49 @@ public class ClientController {
         return "clients/index";
     }
 
-    @GetMapping({"/find","/"})
+    @RequestMapping(value = {""},method = RequestMethod.GET)
+    public String getAllWithSort(Model model,@RequestParam String sortBy){
+
+        List<Client> clients = clientService.findAll();
+
+        if (sortBy != null){
+            switch (sortBy){
+                case "warehouseName":
+                    clients.sort(Comparator.comparing(Client::getWarehouseName));
+                    break;
+                case "realName":
+                    clients.sort((o1, o2) -> {
+                        if (o1.getRealName()== null){
+                            return 1;
+                        }
+                        if (o2.getRealName() == null){
+                            return (-1);
+                        }
+                        return o1.getRealName().compareTo(o2.getRealName());
+                    });
+                    break;
+                case "address":
+                    clients.sort((o1, o2) -> {
+                        if (o1.getAddress()== null){
+                            return 1;
+                        }
+                        if (o2.getAddress() == null){
+                            return (-1);
+                        }
+                        return o1.getAddress().compareTo(o2.getAddress());
+                    });
+                    break;
+            }
+        }
+
+        model.addAttribute("clients",clients);
+
+        model.addAttribute("coords",getCoordinatesForMap(clients));
+
+        return "clients/index";
+    }
+
+    @GetMapping({"/find"})
     public String findByText(Model model, @RequestParam(name = "text") String text){
         List<Client> resultsList = new ArrayList<>();
 
@@ -143,7 +186,6 @@ public class ClientController {
 
         return "redirect:/clients";
     }
-
 
     private List<String> getCoordinatesForMap(List<Client> clients){
         List<String> coordinations = new ArrayList<>();
