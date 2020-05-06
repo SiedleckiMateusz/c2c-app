@@ -1,7 +1,7 @@
 package siedlecki.mateusz.c2capp.service.product;
 
 import org.springframework.stereotype.Service;
-import siedlecki.mateusz.c2capp.model.product.Unit;
+import siedlecki.mateusz.c2capp.entity.product.Unit;
 import siedlecki.mateusz.c2capp.repository.product.UnitRepository;
 import siedlecki.mateusz.c2capp.service.SimpleService;
 

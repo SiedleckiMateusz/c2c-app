@@ -1,7 +1,9 @@
 package siedlecki.mateusz.c2capp.service.client;
 
 import org.springframework.stereotype.Service;
-import siedlecki.mateusz.c2capp.model.client.Client;
+import siedlecki.mateusz.c2capp.controller.mapper.ClientMapper;
+import siedlecki.mateusz.c2capp.controller.model.ShowClient;
+import siedlecki.mateusz.c2capp.entity.client.ClientEntity;
 import siedlecki.mateusz.c2capp.repository.client.ClientRepository;
 import siedlecki.mateusz.c2capp.service.SimpleService;
 
@@ -10,31 +12,33 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class ClientService implements SimpleService<Client, Long> {
+public class ClientService implements SimpleService<ClientEntity, Long> {
 
     private final ClientRepository clientRepository;
+    private final ClientMapper clientMapper;
 
-    public ClientService(ClientRepository clientRepository) {
+    public ClientService(ClientRepository clientRepository, ClientMapper clientMapper) {
         this.clientRepository = clientRepository;
+        this.clientMapper = clientMapper;
     }
 
     @Override
-    public List<Client> findAll() {
+    public List<ClientEntity> findAll() {
         return clientRepository.findAll();
     }
 
     @Override
-    public Optional<Client> findById(Long aLong) {
+    public Optional<ClientEntity> findById(Long aLong) {
         return clientRepository.findById(aLong);
     }
 
     @Override
-    public Client save(Client client) {
+    public ClientEntity save(ClientEntity client) {
         return clientRepository.save(client);
     }
 
     @Override
-    public void delete(Client obj) {
+    public void delete(ClientEntity obj) {
         clientRepository.delete(obj);
     }
 
@@ -43,8 +47,8 @@ public class ClientService implements SimpleService<Client, Long> {
         clientRepository.deleteById(aLong);
     }
 
-    public List<Client> findAllBySentence(String text) {
-        List<Client> all = clientRepository.findAll();
+    public List<ShowClient> findAllBySentence(String text) {
+        List<ShowClient> all = showAll();
 
         final String sentence = text.toLowerCase();
 
@@ -81,6 +85,10 @@ public class ClientService implements SimpleService<Client, Long> {
             }
             return false;
         }).collect(Collectors.toList());
+    }
+
+    public List<ShowClient> showAll(){
+        return findAll().stream().map(clientMapper::toShow).collect(Collectors.toList());
     }
 
 }

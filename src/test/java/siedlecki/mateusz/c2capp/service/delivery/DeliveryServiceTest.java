@@ -6,9 +6,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import siedlecki.mateusz.c2capp.model.delivery.Dealer;
-import siedlecki.mateusz.c2capp.model.delivery.Delivery;
-import siedlecki.mateusz.c2capp.model.delivery.Supplier;
+import siedlecki.mateusz.c2capp.entity.delivery.Dealer;
+import siedlecki.mateusz.c2capp.entity.delivery.Delivery;
+import siedlecki.mateusz.c2capp.entity.delivery.Supplier;
 import siedlecki.mateusz.c2capp.repository.delivery.DeliveryRepository;
 
 import java.time.LocalDateTime;

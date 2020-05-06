@@ -7,7 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import siedlecki.mateusz.c2capp.model.product.Product;
+import siedlecki.mateusz.c2capp.entity.product.Product;
 import siedlecki.mateusz.c2capp.repository.product.ProductRepository;
 
 import java.util.ArrayList;

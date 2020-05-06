@@ -1,7 +1,7 @@
 package siedlecki.mateusz.c2capp.service.delivery;
 
 import org.springframework.stereotype.Service;
-import siedlecki.mateusz.c2capp.model.delivery.ProductInDelivery;
+import siedlecki.mateusz.c2capp.entity.delivery.ProductInDelivery;
 import siedlecki.mateusz.c2capp.repository.delivery.ProductInDeliveryRepository;
 import siedlecki.mateusz.c2capp.service.SimpleService;
 

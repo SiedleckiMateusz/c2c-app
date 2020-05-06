@@ -1,7 +1,7 @@
 package siedlecki.mateusz.c2capp.service.employee;
 
 import org.springframework.stereotype.Service;
-import siedlecki.mateusz.c2capp.model.employee.WorkPosition;
+import siedlecki.mateusz.c2capp.entity.employee.WorkPosition;
 import siedlecki.mateusz.c2capp.repository.employee.WorkPositionRepository;
 import siedlecki.mateusz.c2capp.service.SimpleService;
 

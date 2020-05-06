@@ -1,7 +1,7 @@
 package siedlecki.mateusz.c2capp.service.product;
 
 import org.springframework.stereotype.Service;
-import siedlecki.mateusz.c2capp.model.product.ProductFlag;
+import siedlecki.mateusz.c2capp.entity.product.ProductFlag;
 import siedlecki.mateusz.c2capp.repository.product.ProductFlagRepository;
 import siedlecki.mateusz.c2capp.service.SimpleService;
 

@@ -131,32 +131,43 @@
                 zoomOffset: -1
             }).addTo(mymap);
 
-            let myClients = /*[[${coords}]]*/ [];
 
-            myClients.forEach(cord => {
-                let myCord = cord.split(";");
+            // with ShowClient
+            let myClients = [[${clients}]];
+            let countAll = 0;
+            let countWithCoords = 0;
 
-                console.log("ID: "+myCord[0]);
-                console.log("Name: "+myCord[1]);
-                console.log("X: "+myCord[2]);
-                console.log("Y: "+myCord[3]);
+            myClients.forEach(mapClient => {
+
+                console.log("ID: "+mapClient.id);
+                console.log("Name: "+mapClient.warehouseName);
 
 
-                L.marker([myCord[2], myCord[3]]).addTo(mymap).bindPopup('<a href="/clients/'+myCord[0]+'">'+myCord[1]+'</a>');
-
-                var popup = L.popup();
-
-                function onMapClick(e) {
-                    popup
-                        .setLatLng(e.latlng)
-                        .setContent('<a href="/clients/new/'+e.latlng.lat+'_'+e.latlng.lng+'">Dodaj tutaj punkt</a>')
-                        .openOn(mymap);
+                if(mapClient.coordinates!=null){
+                    L.marker([mapClient.coordinates.x, mapClient.coordinates.y]).addTo(mymap).bindPopup('<a href="/clients/'+mapClient.id+'">'+mapClient.warehouseName+'</a>');
+                    var popup = L.popup();
+                    console.log("X: "+mapClient.coordinates.x);
+                    console.log("Y: "+mapClient.coordinates.y);
+                    countWithCoords++;
                 }
 
-                mymap.on('click', onMapClick);
+                countAll++;
 
-            });
+                    function onMapClick(e) {
+                        popup
+                            .setLatLng(e.latlng)
+                            .setContent('<a href="/clients/new/'+e.latlng.lat+'_'+e.latlng.lng+'">Dodaj tutaj punkt</a>')
+                            .openOn(mymap);
+                    }
 
+                    mymap.on('click', onMapClick);
+            }
+            );
+
+
+
+            console.log("Wszyscy: "+countAll);
+            console.log("Ze współrzędnymi: "+countWithCoords);
 
 
 

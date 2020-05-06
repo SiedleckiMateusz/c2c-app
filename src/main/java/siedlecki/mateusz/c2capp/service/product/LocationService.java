@@ -1,7 +1,7 @@
 package siedlecki.mateusz.c2capp.service.product;
 
 import org.springframework.stereotype.Service;
-import siedlecki.mateusz.c2capp.model.product.Location;
+import siedlecki.mateusz.c2capp.entity.product.Location;
 import siedlecki.mateusz.c2capp.repository.product.LocationRepository;
 import siedlecki.mateusz.c2capp.service.SimpleService;
 

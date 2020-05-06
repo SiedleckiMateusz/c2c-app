@@ -6,7 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import siedlecki.mateusz.c2capp.model.employee.Employee;
+import siedlecki.mateusz.c2capp.entity.employee.Employee;
 import siedlecki.mateusz.c2capp.repository.employee.EmployeeRepository;
 
 import java.util.ArrayList;
