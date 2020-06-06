@@ -16,6 +16,8 @@ import siedlecki.mateusz.c2capp.entity.product.Location;
 import siedlecki.mateusz.c2capp.entity.product.Product;
 import siedlecki.mateusz.c2capp.entity.product.ProductFlag;
 import siedlecki.mateusz.c2capp.entity.product.Unit;
+import siedlecki.mateusz.c2capp.entity.wz.ProductInWz;
+import siedlecki.mateusz.c2capp.entity.wz.Wz;
 import siedlecki.mateusz.c2capp.service.client.ClientService;
 import siedlecki.mateusz.c2capp.service.client.RouteService;
 import siedlecki.mateusz.c2capp.service.delivery.DealerService;
@@ -28,7 +30,9 @@ import siedlecki.mateusz.c2capp.service.product.LocationService;
 import siedlecki.mateusz.c2capp.service.product.ProductFlagService;
 import siedlecki.mateusz.c2capp.service.product.ProductService;
 import siedlecki.mateusz.c2capp.service.product.UnitService;
+import siedlecki.mateusz.c2capp.service.wz.WzService;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,11 +59,13 @@ public class LoadData implements CommandLineRunner {
     private final DeliveryService deliveryService;
     private final SupplierService supplierService;
 
+    private final WzService wzService;
+
     public LoadData(ClientService clientService, RouteService routeService, EmployeeSerivce employeeSerivce
             , DepartmentService departmentService, WorkPositionService workPositionService
             , LocationService locationService, ProductFlagService productFlagService
             , ProductService productService, UnitService unitService, DealerService dealerService
-            , DeliveryService deliveryService, SupplierService supplierService) {
+            , DeliveryService deliveryService, SupplierService supplierService, WzService wzService) {
 
         this.clientService = clientService;
         this.routeService = routeService;
@@ -73,6 +79,7 @@ public class LoadData implements CommandLineRunner {
         this.dealerService = dealerService;
         this.deliveryService = deliveryService;
         this.supplierService = supplierService;
+        this.wzService = wzService;
     }
 
     @Override
@@ -81,6 +88,7 @@ public class LoadData implements CommandLineRunner {
         createEmployee();
         createProducts();
         createDeliveries();
+        createWz();
     }
 
     public void createClients(){
@@ -653,5 +661,46 @@ public class LoadData implements CommandLineRunner {
 
     }
 
+    public void createWz(){
+        List<ProductInWz> productInWzs = new ArrayList<>();
 
+        Wz wz = Wz.builder()
+                .created(LocalDate.now())
+                .client(clientService.findById(24L).orElse(null))
+                .info("Dostarczyć przed godz 13\nTelefon do klienta 700432121")
+                .employee(employeeSerivce.findById(1L).orElse(null))
+                .build();
+
+        ProductInWz product1 = ProductInWz.builder()
+                .product(productService.findAll().get(0))
+                .quantity(32f)
+                .unit(unitService.findById(1L).orElse(null))
+                .wz(wz)
+                .build();
+
+
+        ProductInWz product2 = ProductInWz.builder()
+                .product(productService.findAll().get(1))
+                .quantity(10f)
+                .unit(unitService.findById(2L).orElse(null))
+                .wz(wz)
+                .build();
+
+
+        ProductInWz product3 = ProductInWz.builder()
+                .product(productService.findAll().get(2))
+                .quantity(3f)
+                .unit(unitService.findById(4L).orElse(null))
+                .wz(wz)
+                .build();
+
+
+
+
+        wz.setProductsInWz(Arrays.asList(product1,product2,product3));
+
+        Wz savedWz = wzService.save(wz);
+
+        System.out.println(savedWz);
+    }
 }

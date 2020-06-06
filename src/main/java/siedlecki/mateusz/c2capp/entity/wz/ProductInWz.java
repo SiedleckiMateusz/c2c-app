@@ -18,16 +18,16 @@ import javax.persistence.ManyToOne;
 @Entity
 public class ProductInWz extends BaseProductIn {
 
-
     @ManyToOne
     @JoinColumn(name = "wz_id")
     private Wz wz;
 
     @Builder
-    public ProductInWz(Long id, Product product, Float quantity, Unit unit,Wz wz) {
-        super(id, product, quantity, unit);
+    public ProductInWz(Long id, Product product, Float quantity, Unit unit,String info,Wz wz) {
+        super(id, product, quantity, unit,info);
         this.wz = wz;
     }
+
 
 
 

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import siedlecki.mateusz.c2capp.entity.BaseEntity;
 import siedlecki.mateusz.c2capp.entity.client.ClientEntity;
+import siedlecki.mateusz.c2capp.entity.employee.Employee;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -26,17 +27,22 @@ public class Wz extends BaseEntity {
 
     private String info;
 
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "wz", fetch = FetchType.EAGER)
     private List<ProductInWz> productsInWz = new ArrayList<>();
 
     @Builder
     public Wz(Long id, LocalDate created, List<ProductInWz> productsInWz
-            , ClientEntity client, String info) {
+            , ClientEntity client, String info, Employee employee) {
         super(id);
         this.created = created;
         this.client = client;
         this.info = info;
         this.productsInWz = productsInWz;
+        this.employee = employee;
     }
 
     @Override

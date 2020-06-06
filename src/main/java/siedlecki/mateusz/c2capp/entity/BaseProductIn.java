@@ -1,6 +1,8 @@
 package siedlecki.mateusz.c2capp.entity;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import siedlecki.mateusz.c2capp.entity.product.Product;
 import siedlecki.mateusz.c2capp.entity.product.Unit;
 
@@ -24,13 +26,16 @@ public class BaseProductIn extends BaseEntity {
     @JoinColumn(name = "unit_id")
     private Unit unit;
 
+    private String info;
 
 
-    public BaseProductIn(Long id,Product product, Float quantity, Unit unit) {
+
+    public BaseProductIn(Long id,Product product, Float quantity, Unit unit, String info) {
         super(id);
         this.product = product;
         this.quantity = quantity;
         this.unit = unit;
+        this.info = info;
     }
 
     @Override

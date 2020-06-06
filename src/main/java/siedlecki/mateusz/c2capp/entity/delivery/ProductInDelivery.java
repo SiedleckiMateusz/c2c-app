@@ -21,8 +21,8 @@ public class ProductInDelivery extends BaseProductIn {
     private Delivery delivery;
 
     @Builder
-    public ProductInDelivery(Long id, Product product, Float quantity, Unit unit,Delivery delivery) {
-        super(id,product,quantity,unit);
+    public ProductInDelivery(Long id, Product product, Float quantity, Unit unit,Delivery delivery,String info) {
+        super(id,product,quantity,unit,info);
         this.delivery = delivery;
     }
 

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import siedlecki.mateusz.c2capp.entity.BaseEntity;
 import siedlecki.mateusz.c2capp.entity.delivery.Delivery;
+import siedlecki.mateusz.c2capp.entity.wz.Wz;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -48,6 +49,8 @@ public class Employee extends BaseEntity {
     @OneToMany(mappedBy = "picker")
     private List<Delivery> deliveries = new ArrayList<>();
 
+    @OneToMany(mappedBy = "employee")
+    private List<Wz> wz = new ArrayList<>();
 
     @Builder
     public Employee(Long id, String firstName, String lastName, String login, String password, String email, String phoneNumber,
