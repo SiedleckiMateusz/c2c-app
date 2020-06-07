@@ -6,7 +6,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import siedlecki.mateusz.c2capp.entity.wz.Wz;
+import siedlecki.mateusz.c2capp.entity.wz.WzEntity;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -17,7 +17,7 @@ import java.net.URISyntaxException;
 @AllArgsConstructor
 public class PdfGeneratorForWZ {
 
-    public static Document generate(OutputStream outputStream, Wz wz) throws IOException, DocumentException, URISyntaxException {
+    public static Document generate(OutputStream outputStream, WzEntity wz) throws IOException, DocumentException, URISyntaxException {
         com.itextpdf.text.Document document = new com.itextpdf.text.Document();
 
         PdfWriter.getInstance(document,outputStream);

@@ -1,7 +1,7 @@
 package siedlecki.mateusz.c2capp.service.wz;
 
 import org.springframework.stereotype.Service;
-import siedlecki.mateusz.c2capp.entity.wz.Wz;
+import siedlecki.mateusz.c2capp.entity.wz.WzEntity;
 import siedlecki.mateusz.c2capp.repository.wz.WzRepository;
 import siedlecki.mateusz.c2capp.service.SimpleService;
 
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class WzService implements SimpleService<Wz,Long> {
+public class WzService implements SimpleService<WzEntity,Long> {
 
     private final WzRepository repository;
 
@@ -18,22 +18,22 @@ public class WzService implements SimpleService<Wz,Long> {
     }
 
     @Override
-    public List<Wz> findAll() {
+    public List<WzEntity> findAll() {
         return repository.findAll();
     }
 
     @Override
-    public Optional<Wz> findById(Long aLong) {
+    public Optional<WzEntity> findById(Long aLong) {
         return repository.findById(aLong);
     }
 
     @Override
-    public Wz save(Wz wz) {
+    public WzEntity save(WzEntity wz) {
         return repository.save(wz);
     }
 
     @Override
-    public void delete(Wz obj) {
+    public void delete(WzEntity obj) {
         repository.delete(obj);
     }
 

@@ -1,8 +1,8 @@
 package siedlecki.mateusz.c2capp.service.client;
 
 import org.springframework.stereotype.Service;
-import siedlecki.mateusz.c2capp.controller.mapper.ClientMapper;
-import siedlecki.mateusz.c2capp.controller.model.ShowClient;
+import siedlecki.mateusz.c2capp.controller.mapper.client.ClientMapper;
+import siedlecki.mateusz.c2capp.controller.model.client.ShowClient;
 import siedlecki.mateusz.c2capp.entity.client.ClientEntity;
 import siedlecki.mateusz.c2capp.repository.client.ClientRepository;
 import siedlecki.mateusz.c2capp.service.SimpleService;
@@ -48,7 +48,7 @@ public class ClientService implements SimpleService<ClientEntity, Long> {
     }
 
     public List<ShowClient> findAllBySentence(String text) {
-        List<ShowClient> all = showAll();
+        List<ShowClient> all = findAllToShow();
 
         final String sentence = text.toLowerCase();
 
@@ -79,16 +79,14 @@ public class ClientService implements SimpleService<ClientEntity, Long> {
             }
 
             if (client.getRoute() != null) {
-                if (client.getRoute().getName().toLowerCase().contains(sentence)) {
-                    return true;
-                }
+                return client.getRoute().getName().toLowerCase().contains(sentence);
             }
             return false;
         }).collect(Collectors.toList());
     }
 
-    public List<ShowClient> showAll(){
-        return findAll().stream().map(clientMapper::toShow).collect(Collectors.toList());
+    public List<ShowClient> findAllToShow(){
+        return findAll().stream().map(clientMapper::entityToShow).collect(Collectors.toList());
     }
 
 }

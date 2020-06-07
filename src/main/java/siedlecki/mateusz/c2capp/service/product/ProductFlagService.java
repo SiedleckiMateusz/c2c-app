@@ -1,7 +1,7 @@
 package siedlecki.mateusz.c2capp.service.product;
 
 import org.springframework.stereotype.Service;
-import siedlecki.mateusz.c2capp.entity.product.ProductFlag;
+import siedlecki.mateusz.c2capp.entity.product.ProductFlagEntity;
 import siedlecki.mateusz.c2capp.repository.product.ProductFlagRepository;
 import siedlecki.mateusz.c2capp.service.SimpleService;
 
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductFlagService implements SimpleService<ProductFlag,Long> {
+public class ProductFlagService implements SimpleService<ProductFlagEntity,Long> {
 
     private final ProductFlagRepository repository;
 
@@ -18,26 +18,26 @@ public class ProductFlagService implements SimpleService<ProductFlag,Long> {
     }
 
     @Override
-    public List<ProductFlag> findAll() {
+    public List<ProductFlagEntity> findAll() {
         return repository.findAll();
     }
 
     @Override
-    public Optional<ProductFlag> findById(Long aLong) {
+    public Optional<ProductFlagEntity> findById(Long aLong) {
         return repository.findById(aLong);
     }
 
     @Override
-    public ProductFlag save(ProductFlag productFlag) {
+    public ProductFlagEntity save(ProductFlagEntity productFlag) {
         return repository.save(productFlag);
     }
 
-    public List<ProductFlag> saveAll(List<ProductFlag> flags){
+    public List<ProductFlagEntity> saveAll(List<ProductFlagEntity> flags){
         return repository.saveAll(flags);
     }
 
     @Override
-    public void delete(ProductFlag obj) {
+    public void delete(ProductFlagEntity obj) {
         repository.delete(obj);
     }
 

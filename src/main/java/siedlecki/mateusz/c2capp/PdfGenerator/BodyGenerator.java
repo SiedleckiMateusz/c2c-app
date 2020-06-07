@@ -3,15 +3,15 @@ package siedlecki.mateusz.c2capp.PdfGenerator;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
-import siedlecki.mateusz.c2capp.entity.wz.ProductInWz;
-import siedlecki.mateusz.c2capp.entity.wz.Wz;
+import siedlecki.mateusz.c2capp.entity.wz.ProductInWzEntity;
+import siedlecki.mateusz.c2capp.entity.wz.WzEntity;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class BodyGenerator {
 
-    public static void generate(Wz wz, Document document) throws DocumentException {
+    public static void generate(WzEntity wz, Document document) throws DocumentException {
         PdfPTable table = new PdfPTable(new float[]{1,7,2,2,3});
         table.setWidthPercentage(100);
         tableHeader(table);
@@ -27,7 +27,7 @@ public class BodyGenerator {
         headers.forEach(header->table.addCell(headerCell(header)));
     }
 
-    private static void tableBody(PdfPTable table,List<ProductInWz> list){
+    private static void tableBody(PdfPTable table,List<ProductInWzEntity> list){
 //        for (int i = 0; i<40;i++){
 //            List<String> data = Arrays.asList("Reklamówka na rolce 25x45 a'160 BOM01", "1200", "rol.", "");
 //            table.addCell(new PdfPCell(phrase(String.valueOf(i+1))));
@@ -36,7 +36,7 @@ public class BodyGenerator {
 
 
         int i = 1;
-        for (ProductInWz prduct : list) {
+        for (ProductInWzEntity prduct : list) {
             addCellToTable(table,String.valueOf(i));
             i++;
             addCellToTable(table,prduct.getProduct().getName());

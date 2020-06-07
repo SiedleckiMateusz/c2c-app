@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import siedlecki.mateusz.c2capp.controller.model.ShowClient;
+import siedlecki.mateusz.c2capp.controller.model.client.ShowClient;
 import siedlecki.mateusz.c2capp.entity.client.ClientEntity;
 import siedlecki.mateusz.c2capp.entity.client.CoordinatesEntity;
 import siedlecki.mateusz.c2capp.entity.client.RouteEntity;
@@ -38,7 +38,7 @@ public class ClientController {
 
     @GetMapping(value = {"/"})
     public String getAll(Model model){
-        List<ShowClient> clients = clientService.showAll();
+        List<ShowClient> clients = clientService.findAllToShow();
         clients.forEach(System.out::println);
         model.addAttribute("clients",clients);
 
@@ -48,7 +48,7 @@ public class ClientController {
     @GetMapping(value = {""})
     public String getAllWithSort(Model model,@RequestParam String sortBy){
 
-        List<ShowClient> clients = clientService.showAll();
+        List<ShowClient> clients = clientService.findAllToShow();
 
         if (sortBy != null){
             switch (sortBy){

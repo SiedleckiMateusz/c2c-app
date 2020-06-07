@@ -1,7 +1,7 @@
 package siedlecki.mateusz.c2capp.service.employee;
 
 import org.springframework.stereotype.Service;
-import siedlecki.mateusz.c2capp.entity.employee.WorkPosition;
+import siedlecki.mateusz.c2capp.entity.employee.WorkPositionEntity;
 import siedlecki.mateusz.c2capp.repository.employee.WorkPositionRepository;
 import siedlecki.mateusz.c2capp.service.SimpleService;
 
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class WorkPositionService implements SimpleService<WorkPosition,Long> {
+public class WorkPositionService implements SimpleService<WorkPositionEntity,Long> {
 
     private final WorkPositionRepository repository;
 
@@ -19,26 +19,26 @@ public class WorkPositionService implements SimpleService<WorkPosition,Long> {
 
 
     @Override
-    public List<WorkPosition> findAll() {
+    public List<WorkPositionEntity> findAll() {
         return repository.findAll();
     }
 
     @Override
-    public Optional<WorkPosition> findById(Long aLong) {
+    public Optional<WorkPositionEntity> findById(Long aLong) {
         return repository.findById(aLong);
     }
 
     @Override
-    public WorkPosition save(WorkPosition workPosition) {
+    public WorkPositionEntity save(WorkPositionEntity workPosition) {
         return repository.save(workPosition);
     }
 
-    public List<WorkPosition> saveAll(List<WorkPosition> objectsList) {
+    public List<WorkPositionEntity> saveAll(List<WorkPositionEntity> objectsList) {
         return repository.saveAll(objectsList);
     }
 
     @Override
-    public void delete(WorkPosition obj) {
+    public void delete(WorkPositionEntity obj) {
         repository.delete(obj);
     }
 

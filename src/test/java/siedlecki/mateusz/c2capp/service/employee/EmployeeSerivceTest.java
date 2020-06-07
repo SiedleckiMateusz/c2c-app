@@ -6,7 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import siedlecki.mateusz.c2capp.entity.employee.Employee;
+import siedlecki.mateusz.c2capp.entity.employee.EmployeeEntity;
 import siedlecki.mateusz.c2capp.repository.employee.EmployeeRepository;
 
 import java.util.ArrayList;
@@ -25,11 +25,11 @@ class EmployeeSerivceTest {
     @Mock
     EmployeeRepository employeeRepository;
 
-    Employee someEmployee;
+    EmployeeEntity someEmployee;
 
     @BeforeEach
     void setUp() {
-        someEmployee = Employee.builder()
+        someEmployee = EmployeeEntity.builder()
                 .firstName("Mateusz")
                 .lastName("Siedlecki")
                 .login("msiedlecki")
@@ -41,12 +41,12 @@ class EmployeeSerivceTest {
     @Test
     void findAll() {
 //        given
-        List<Employee> employees = new ArrayList<>();
+        List<EmployeeEntity> employees = new ArrayList<>();
         employees.add(someEmployee);
         when(employeeRepository.findAll()).thenReturn(employees);
 
 //        when
-        List<Employee> allEmployees = employeeSerivce.findAll();
+        List<EmployeeEntity> allEmployees = employeeSerivce.findAll();
 
 //        then
         assertEquals(1,allEmployees.size());
@@ -59,7 +59,7 @@ class EmployeeSerivceTest {
         when(employeeRepository.findById(any())).thenReturn(Optional.of(someEmployee));
 
 //        when
-        Optional<Employee> byIdEmployee = employeeSerivce.findById(1L);
+        Optional<EmployeeEntity> byIdEmployee = employeeSerivce.findById(1L);
 
 //        then
         assertNotNull(byIdEmployee);
@@ -73,7 +73,7 @@ class EmployeeSerivceTest {
         when(employeeRepository.findById(any())).thenReturn(Optional.empty());
 
 //        when
-        Employee byIdEmployee = employeeSerivce.findById(1L).orElse(null);
+        EmployeeEntity byIdEmployee = employeeSerivce.findById(1L).orElse(null);
 
 //        then
         assertNull(byIdEmployee);
@@ -84,11 +84,11 @@ class EmployeeSerivceTest {
     @Test
     void save() {
 //        given
-        Employee employee = Employee.builder().id(1L).build();
+        EmployeeEntity employee = EmployeeEntity.builder().id(1L).build();
         when(employeeRepository.save(any())).thenReturn(someEmployee);
 
 //        when
-        Employee savedEmployee = employeeSerivce.save(employee);
+        EmployeeEntity savedEmployee = employeeSerivce.save(employee);
 
 //        then
         assertNotNull(savedEmployee);

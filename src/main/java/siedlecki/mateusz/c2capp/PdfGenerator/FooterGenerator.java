@@ -3,13 +3,13 @@ package siedlecki.mateusz.c2capp.PdfGenerator;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
-import siedlecki.mateusz.c2capp.entity.employee.Employee;
-import siedlecki.mateusz.c2capp.entity.wz.Wz;
+import siedlecki.mateusz.c2capp.entity.employee.EmployeeEntity;
+import siedlecki.mateusz.c2capp.entity.wz.WzEntity;
 
 public class FooterGenerator {
 
 
-    public static void generate(Wz wz, Document document) throws DocumentException {
+    public static void generate(WzEntity wz, Document document) throws DocumentException {
 
         document.add(infoTable(wz));
 
@@ -18,7 +18,7 @@ public class FooterGenerator {
         PdfPTable table = new PdfPTable(new float[]{4,2,4});
         table.setWidthPercentage(100);
 
-        Employee employee = wz.getEmployee();
+        EmployeeEntity employee = wz.getEmployee();
         table.addCell(signatureTable("Wystawił(a):",
                 employee.getFirstName()+" "+employee.getLastName()));
         table.addCell(emptyCell());
@@ -62,7 +62,7 @@ public class FooterGenerator {
         return cell;
     }
 
-    private static PdfPTable infoTable(Wz wz){
+    private static PdfPTable infoTable(WzEntity wz){
         PdfPTable infoTable = new PdfPTable(new float[]{3,7});
         infoTable.setWidthPercentage(100);
 

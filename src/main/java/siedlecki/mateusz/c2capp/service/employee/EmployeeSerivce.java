@@ -1,7 +1,7 @@
 package siedlecki.mateusz.c2capp.service.employee;
 
 import org.springframework.stereotype.Service;
-import siedlecki.mateusz.c2capp.entity.employee.Employee;
+import siedlecki.mateusz.c2capp.entity.employee.EmployeeEntity;
 import siedlecki.mateusz.c2capp.repository.employee.EmployeeRepository;
 import siedlecki.mateusz.c2capp.service.SimpleService;
 
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class EmployeeSerivce implements SimpleService<Employee,Long> {
+public class EmployeeSerivce implements SimpleService<EmployeeEntity,Long> {
 
     private final EmployeeRepository repository;
 
@@ -18,22 +18,22 @@ public class EmployeeSerivce implements SimpleService<Employee,Long> {
     }
 
     @Override
-    public List<Employee> findAll() {
+    public List<EmployeeEntity> findAll() {
         return repository.findAll();
     }
 
     @Override
-    public Optional<Employee> findById(Long aLong) {
+    public Optional<EmployeeEntity> findById(Long aLong) {
         return repository.findById(aLong);
     }
 
     @Override
-    public Employee save(Employee employee) {
+    public EmployeeEntity save(EmployeeEntity employee) {
         return repository.save(employee);
     }
 
     @Override
-    public void delete(Employee obj) {
+    public void delete(EmployeeEntity obj) {
         repository.delete(obj);
     }
 

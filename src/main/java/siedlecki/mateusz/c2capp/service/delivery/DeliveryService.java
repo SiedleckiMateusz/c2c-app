@@ -1,7 +1,7 @@
 package siedlecki.mateusz.c2capp.service.delivery;
 
 import org.springframework.stereotype.Service;
-import siedlecki.mateusz.c2capp.entity.delivery.Delivery;
+import siedlecki.mateusz.c2capp.entity.delivery.DeliveryEntity;
 import siedlecki.mateusz.c2capp.repository.delivery.DeliveryRepository;
 import siedlecki.mateusz.c2capp.service.SimpleService;
 
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class DeliveryService implements SimpleService<Delivery,Long> {
+public class DeliveryService implements SimpleService<DeliveryEntity,Long> {
 
     private final DeliveryRepository deliveryRepository;
 
@@ -19,22 +19,22 @@ public class DeliveryService implements SimpleService<Delivery,Long> {
 
 
     @Override
-    public List<Delivery> findAll() {
+    public List<DeliveryEntity> findAll() {
         return deliveryRepository.findAll();
     }
 
     @Override
-    public Optional<Delivery> findById(Long aLong) {
+    public Optional<DeliveryEntity> findById(Long aLong) {
         return deliveryRepository.findById(aLong);
     }
 
     @Override
-    public Delivery save(Delivery delivery) {
+    public DeliveryEntity save(DeliveryEntity delivery) {
         return deliveryRepository.save(delivery);
     }
 
     @Override
-    public void delete(Delivery obj) {
+    public void delete(DeliveryEntity obj) {
         deliveryRepository.delete(obj);
     }
 

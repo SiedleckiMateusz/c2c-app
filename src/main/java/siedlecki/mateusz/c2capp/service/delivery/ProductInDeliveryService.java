@@ -1,7 +1,7 @@
 package siedlecki.mateusz.c2capp.service.delivery;
 
 import org.springframework.stereotype.Service;
-import siedlecki.mateusz.c2capp.entity.delivery.ProductInDelivery;
+import siedlecki.mateusz.c2capp.entity.delivery.ProductInDeliveryEntity;
 import siedlecki.mateusz.c2capp.repository.delivery.ProductInDeliveryRepository;
 import siedlecki.mateusz.c2capp.service.SimpleService;
 
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductInDeliveryService implements SimpleService<ProductInDelivery,Long> {
+public class ProductInDeliveryService implements SimpleService<ProductInDeliveryEntity,Long> {
 
     private final ProductInDeliveryRepository repository;
 
@@ -18,22 +18,22 @@ public class ProductInDeliveryService implements SimpleService<ProductInDelivery
     }
 
     @Override
-    public List<ProductInDelivery> findAll() {
+    public List<ProductInDeliveryEntity> findAll() {
         return repository.findAll();
     }
 
     @Override
-    public Optional<ProductInDelivery> findById(Long aLong) {
+    public Optional<ProductInDeliveryEntity> findById(Long aLong) {
         return repository.findById(aLong);
     }
 
     @Override
-    public ProductInDelivery save(ProductInDelivery productInDelivery) {
+    public ProductInDeliveryEntity save(ProductInDeliveryEntity productInDelivery) {
         return repository.save(productInDelivery);
     }
 
     @Override
-    public void delete(ProductInDelivery obj) {
+    public void delete(ProductInDeliveryEntity obj) {
         repository.delete(obj);
     }
 

@@ -24,6 +24,8 @@ public class ClientEntity extends BaseEntity {
 
     private String address;
 
+    private String pictureUrl;
+
     @OneToOne(mappedBy = "client",cascade = CascadeType.ALL)
     @JsonManagedReference
     private CoordinatesEntity coordinates;

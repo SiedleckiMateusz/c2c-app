@@ -7,7 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import siedlecki.mateusz.c2capp.entity.product.Product;
+import siedlecki.mateusz.c2capp.entity.product.ProductEntity;
 import siedlecki.mateusz.c2capp.repository.product.ProductRepository;
 
 import java.util.ArrayList;
@@ -27,11 +27,11 @@ class ProductServiceTest {
     @Mock
     ProductRepository productRepository;
 
-    Product someProduct;
+    ProductEntity someProduct;
 
     @BeforeEach
     void setUp() {
-        someProduct = Product.builder()
+        someProduct = ProductEntity.builder()
                 .name("Widelec plastikowy a'100")
                 .description("Widelec plastikowy czarny, pakowany po 100 szt.")
                 .barcode("12412624342")
@@ -43,11 +43,11 @@ class ProductServiceTest {
     @Test
     void findAll() {
 //        given
-        List<Product> products = new ArrayList<>();
+        List<ProductEntity> products = new ArrayList<>();
         products.add(someProduct);
         when(productRepository.findAll()).thenReturn(products);
 //        when
-        List<Product> allProducts = productService.findAll();
+        List<ProductEntity> allProducts = productService.findAll();
 
 //        then
         Assertions.assertEquals(1,allProducts.size());
@@ -59,7 +59,7 @@ class ProductServiceTest {
 //        given
         when(productRepository.findById(any())).thenReturn(Optional.of(someProduct));
 //        when
-        Product byIdProduct = productService.findById(1L).orElse(null);
+        ProductEntity byIdProduct = productService.findById(1L).orElse(null);
 
 //        then
         assertNotNull(byIdProduct);
@@ -73,7 +73,7 @@ class ProductServiceTest {
 //        given
         when(productRepository.findById(any())).thenReturn(Optional.empty());
 //        when
-        Product byIdProduct = productService.findById(1L).orElse(null);
+        ProductEntity byIdProduct = productService.findById(1L).orElse(null);
 
 //        then
         assertNull(byIdProduct);

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product</title>
+
+    <style>
+        button{
+            margin: 5px;
+        }
+        .mainContainer{
+            width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        table,th,tr,td{
+            border: 1px solid black;
+            border-spacing: inherit;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+<!--/*@thymesVar id="wz" type="siedlecki.mateusz.c2capp.controller.model.wz.ShowWz"*/-->
+<div class="mainContainer" th:if="${wz != null}">
+    <p th:text="${wz.id}">Id</p>
+    <p th:text="${wz.created}">Data utworzenia</p>
+    <p th:text="${wz.client.realName}">Nazwa klienta</p>
+    <p th:text="${wz.info}">Informacje</p>
+    <p th:text="${wz.employee.firstName}+' '+${wz.employee.lastName}">Imię i nazwisko wystawiającego</p>
+
+    <div class="table">
+        <table id="myTable" th:if="${!wz.productsInWz.isEmpty()}">
+            <tr>
+                <form method="get" action="/clients/find">
+                    <th>Nazwa produktu</th>
+                    <th>Ilość</th>
+                    <th>J.M.</th>
+                    <th>Info</th>
+                </form>
+            </tr>
+            <tr th:each="product : ${wz.productsInWz}">
+                <td th:text="${product.product.name}">Mój produkt</td>
+                <td th:text="${product.quantity}">21</td>
+                <td th:text="${product.unit.shortName}">opakowań</td>
+                <td th:text="${product.info}">Dodatkowe informacje</td>
+            </tr>
+        </table>
+
+        <p th:unless="${!wz.productsInWz?.isEmpty()}" class="message">Brak produktów...</p>
+    </div>
+
+    <a href="#" th:href="'/wz/edit/'+${wz.id}"><button type="button">EDYTUJ</button></a>
+    <a href="#" th:href="'/wz/remove/'+${wz.id}"><button type="button">USUŃ</button></a>
+</div>
+<p th:if="${wz == null}"> Nie ma takiego użytkownika</p>
+</body>
+</html>

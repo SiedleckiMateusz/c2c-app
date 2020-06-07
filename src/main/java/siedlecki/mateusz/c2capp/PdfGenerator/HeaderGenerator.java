@@ -4,7 +4,7 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import siedlecki.mateusz.c2capp.entity.client.ClientEntity;
-import siedlecki.mateusz.c2capp.entity.wz.Wz;
+import siedlecki.mateusz.c2capp.entity.wz.WzEntity;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 
 public class HeaderGenerator {
 
-    public static void generate(Wz wz,Document document) throws IOException, URISyntaxException, DocumentException {
+    public static void generate(WzEntity wz, Document document) throws IOException, URISyntaxException, DocumentException {
 
         PdfPTable headerTable = new PdfPTable(new float[]{9,2,9});
         headerTable.setWidthPercentage(100);
@@ -84,7 +84,7 @@ public class HeaderGenerator {
         return logoCell;
     }
 
-    private static PdfPCell dateAndPlaceCell(Wz wz){
+    private static PdfPCell dateAndPlaceCell(WzEntity wz){
         PdfPCell dateAndPlaceCell = new PdfPCell();
 
         PdfPTable dateAndPlaceTable = new PdfPTable(1);
@@ -116,7 +116,7 @@ public class HeaderGenerator {
                         "NIP: 9462637937");
     }
 
-    private static PdfPCell clientCell(Wz wz){
+    private static PdfPCell clientCell(WzEntity wz){
         return headerAndDataCell("Odbiorca",generateTextClient(wz.getClient()));
     }
 
@@ -162,7 +162,7 @@ public class HeaderGenerator {
         return cell;
     }
 
-    private static Paragraph title(Wz wz){
+    private static Paragraph title(WzEntity wz){
         Paragraph p = new Paragraph();
         Phrase phrase = new Phrase("WYDANIE ZEWNĘTRZNE nr "+wz.getId()+"/04/2020",FontFactory.getFont(FontFactory.HELVETICA_BOLD,"Cp1250",16));
         p.add(phrase);

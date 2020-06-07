@@ -1,7 +1,7 @@
 package siedlecki.mateusz.c2capp.service.product;
 
 import org.springframework.stereotype.Service;
-import siedlecki.mateusz.c2capp.entity.product.Location;
+import siedlecki.mateusz.c2capp.entity.product.LocationEntity;
 import siedlecki.mateusz.c2capp.repository.product.LocationRepository;
 import siedlecki.mateusz.c2capp.service.SimpleService;
 
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class LocationService implements SimpleService<Location,Long> {
+public class LocationService implements SimpleService<LocationEntity,Long> {
 
     private final LocationRepository repository;
 
@@ -18,26 +18,26 @@ public class LocationService implements SimpleService<Location,Long> {
     }
 
     @Override
-    public List<Location> findAll() {
+    public List<LocationEntity> findAll() {
         return repository.findAll();
     }
 
     @Override
-    public Optional<Location> findById(Long aLong) {
+    public Optional<LocationEntity> findById(Long aLong) {
         return repository.findById(aLong);
     }
 
     @Override
-    public Location save(Location location) {
+    public LocationEntity save(LocationEntity location) {
         return repository.save(location);
     }
 
-    public List<Location> saveAll(List<Location> locations){
+    public List<LocationEntity> saveAll(List<LocationEntity> locations){
         return repository.saveAll(locations);
     }
 
     @Override
-    public void delete(Location obj) {
+    public void delete(LocationEntity obj) {
         repository.delete(obj);
     }
 

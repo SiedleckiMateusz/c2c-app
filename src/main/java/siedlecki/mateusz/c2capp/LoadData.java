@@ -5,19 +5,19 @@ import org.springframework.stereotype.Component;
 import siedlecki.mateusz.c2capp.entity.client.ClientEntity;
 import siedlecki.mateusz.c2capp.entity.client.CoordinatesEntity;
 import siedlecki.mateusz.c2capp.entity.client.RouteEntity;
-import siedlecki.mateusz.c2capp.entity.delivery.Dealer;
-import siedlecki.mateusz.c2capp.entity.delivery.Delivery;
-import siedlecki.mateusz.c2capp.entity.delivery.ProductInDelivery;
-import siedlecki.mateusz.c2capp.entity.delivery.Supplier;
-import siedlecki.mateusz.c2capp.entity.employee.Department;
-import siedlecki.mateusz.c2capp.entity.employee.Employee;
-import siedlecki.mateusz.c2capp.entity.employee.WorkPosition;
-import siedlecki.mateusz.c2capp.entity.product.Location;
-import siedlecki.mateusz.c2capp.entity.product.Product;
-import siedlecki.mateusz.c2capp.entity.product.ProductFlag;
-import siedlecki.mateusz.c2capp.entity.product.Unit;
-import siedlecki.mateusz.c2capp.entity.wz.ProductInWz;
-import siedlecki.mateusz.c2capp.entity.wz.Wz;
+import siedlecki.mateusz.c2capp.entity.delivery.DealerEntity;
+import siedlecki.mateusz.c2capp.entity.delivery.DeliveryEntity;
+import siedlecki.mateusz.c2capp.entity.delivery.ProductInDeliveryEntity;
+import siedlecki.mateusz.c2capp.entity.delivery.SupplierEntity;
+import siedlecki.mateusz.c2capp.entity.employee.DepartmentEntity;
+import siedlecki.mateusz.c2capp.entity.employee.EmployeeEntity;
+import siedlecki.mateusz.c2capp.entity.employee.WorkPositionEntity;
+import siedlecki.mateusz.c2capp.entity.product.LocationEntity;
+import siedlecki.mateusz.c2capp.entity.product.ProductEntity;
+import siedlecki.mateusz.c2capp.entity.product.ProductFlagEntity;
+import siedlecki.mateusz.c2capp.entity.wz.ProductInWzEntity;
+import siedlecki.mateusz.c2capp.entity.wz.UnitEntity;
+import siedlecki.mateusz.c2capp.entity.wz.WzEntity;
 import siedlecki.mateusz.c2capp.service.client.ClientService;
 import siedlecki.mateusz.c2capp.service.client.RouteService;
 import siedlecki.mateusz.c2capp.service.delivery.DealerService;
@@ -417,28 +417,28 @@ public class LoadData implements CommandLineRunner {
     }
 
     public void createEmployee(){
-        Department magazyn = new Department("Magazyn");
-        Department biuro = new Department("Biuro");
-        Department handlowy = new Department("Handlowy");
-        Department fabryka = new Department("Fabryka");
-        Department zarzad = new Department("Zarząd");
+        DepartmentEntity magazyn = new DepartmentEntity("Magazyn");
+        DepartmentEntity biuro = new DepartmentEntity("Biuro");
+        DepartmentEntity handlowy = new DepartmentEntity("Handlowy");
+        DepartmentEntity fabryka = new DepartmentEntity("Fabryka");
+        DepartmentEntity zarzad = new DepartmentEntity("Zarząd");
 
         departmentService.saveAll(Arrays.asList(magazyn,biuro,handlowy,fabryka,zarzad));
         departmentService.findAll().forEach(System.out::println);
 
-        WorkPosition magazynier = new WorkPosition("Pracownik magazynu","Pracownik magazynu");
-        WorkPosition kierowca = new WorkPosition("Kierowca","Kierowca");
-        WorkPosition kierownik = new WorkPosition("Kierownik","Kierownik");
-        WorkPosition zastepcaKierownika = new WorkPosition("Zastępca kierownika","Zastępca kierownika");
-        WorkPosition przedstawicielHandlowy = new WorkPosition("Przedstawiciel handlowy","Przedstawiciel handlowy");
-        WorkPosition pracownikBiurowy = new WorkPosition("Pracownik biurowy","Pracownik biurowy");
-        WorkPosition prezes = new WorkPosition("Prezes","Prezes");
-        WorkPosition admin = new WorkPosition("Administrator aplikacji","Administrator aplikacji");
+        WorkPositionEntity magazynier = new WorkPositionEntity("Pracownik magazynu","Pracownik magazynu");
+        WorkPositionEntity kierowca = new WorkPositionEntity("Kierowca","Kierowca");
+        WorkPositionEntity kierownik = new WorkPositionEntity("Kierownik","Kierownik");
+        WorkPositionEntity zastepcaKierownika = new WorkPositionEntity("Zastępca kierownika","Zastępca kierownika");
+        WorkPositionEntity przedstawicielHandlowy = new WorkPositionEntity("Przedstawiciel handlowy","Przedstawiciel handlowy");
+        WorkPositionEntity pracownikBiurowy = new WorkPositionEntity("Pracownik biurowy","Pracownik biurowy");
+        WorkPositionEntity prezes = new WorkPositionEntity("Prezes","Prezes");
+        WorkPositionEntity admin = new WorkPositionEntity("Administrator aplikacji","Administrator aplikacji");
 
         workPositionService.saveAll(Arrays.asList(magazynier,kierowca,kierownik,zastepcaKierownika,przedstawicielHandlowy,pracownikBiurowy,prezes,admin));
         workPositionService.findAll().forEach(System.out::println);
 
-        Employee mateusz = Employee.builder()
+        EmployeeEntity mateusz = EmployeeEntity.builder()
                 .firstName("Mateusz")
                 .lastName("Siedlecki")
                 .login("msiedlecki")
@@ -452,7 +452,7 @@ public class LoadData implements CommandLineRunner {
         employeeSerivce.save(mateusz);
 
 
-        Employee piotrek = Employee.builder()
+        EmployeeEntity piotrek = EmployeeEntity.builder()
                 .firstName("Piotrek")
                 .lastName("Panasiuk")
                 .login("ppanasiuk")
@@ -465,7 +465,7 @@ public class LoadData implements CommandLineRunner {
 
         employeeSerivce.save(piotrek);
 
-        Employee darek = Employee.builder()
+        EmployeeEntity darek = EmployeeEntity.builder()
                 .firstName("Darek")
                 .lastName("Cękała")
                 .login("dcekala")
@@ -479,7 +479,7 @@ public class LoadData implements CommandLineRunner {
         employeeSerivce.save(darek);
 
 
-        Employee sandra = Employee.builder()
+        EmployeeEntity sandra = EmployeeEntity.builder()
                 .firstName("Sandra")
                 .lastName("Ignatiuk")
                 .login("signatiuk")
@@ -493,7 +493,7 @@ public class LoadData implements CommandLineRunner {
         employeeSerivce.save(sandra);
 
 
-        Employee przemek = Employee.builder()
+        EmployeeEntity przemek = EmployeeEntity.builder()
                 .firstName("Przemysław")
                 .lastName("Niedziałek")
                 .login("pniedzialek")
@@ -514,31 +514,31 @@ public class LoadData implements CommandLineRunner {
     }
 
     public void createProducts(){
-        Location a1 = new Location("Alejka 1");
-        Location a2 = new Location("Alejka 2");
-        Location b1 = new Location("Blaszak 1");
-        Location b2 = new Location("Blaszak 2");
-        Location b3 = new Location("Blaszak 3");
+        LocationEntity a1 = new LocationEntity("Alejka 1");
+        LocationEntity a2 = new LocationEntity("Alejka 2");
+        LocationEntity b1 = new LocationEntity("Blaszak 1");
+        LocationEntity b2 = new LocationEntity("Blaszak 2");
+        LocationEntity b3 = new LocationEntity("Blaszak 3");
 
         locationService.saveAll(Arrays.asList(a1,a2,b1,b2,b3));
         locationService.findAll().forEach(System.out::println);
 
-        ProductFlag folia = new ProductFlag("folia");
-        ProductFlag aluminium = new ProductFlag("aluminium");
-        ProductFlag spozywcza = new ProductFlag("spożywcza");
-        ProductFlag woreczek = new ProductFlag("woreczek");
-        ProductFlag hdpe = new ProductFlag("HDPE");
-        ProductFlag karton = new ProductFlag("karton");
-        ProductFlag pizza = new ProductFlag("pizza");
-        ProductFlag nadruk = new ProductFlag("nadruk");
-        ProductFlag koperta = new ProductFlag("koperta");
-        ProductFlag frytki = new ProductFlag("frytki");
+        ProductFlagEntity folia = new ProductFlagEntity("folia");
+        ProductFlagEntity aluminium = new ProductFlagEntity("aluminium");
+        ProductFlagEntity spozywcza = new ProductFlagEntity("spożywcza");
+        ProductFlagEntity woreczek = new ProductFlagEntity("woreczek");
+        ProductFlagEntity hdpe = new ProductFlagEntity("HDPE");
+        ProductFlagEntity karton = new ProductFlagEntity("karton");
+        ProductFlagEntity pizza = new ProductFlagEntity("pizza");
+        ProductFlagEntity nadruk = new ProductFlagEntity("nadruk");
+        ProductFlagEntity koperta = new ProductFlagEntity("koperta");
+        ProductFlagEntity frytki = new ProductFlagEntity("frytki");
 
         productFlagService.saveAll(Arrays.asList(folia,aluminium,spozywcza,woreczek,hdpe,karton,pizza,nadruk,koperta,frytki));
         productFlagService.findAll().forEach(System.out::println);
 
 
-        Product kopertanaFrytki = Product.builder()
+        ProductEntity kopertanaFrytki = ProductEntity.builder()
                 .name("Koperta frytki foliowana duza 22cm a'200")
                 .description("Koperta frytki foliowana duza 22cm a'200 Pojemnosc: 200g, pakowana jest po 200szt.")
                 .barcode("592051235413")
@@ -551,7 +551,7 @@ public class LoadData implements CommandLineRunner {
         productService.save(kopertanaFrytki);
 
 
-        Product kartonNaPizze = Product.builder()
+        ProductEntity kartonNaPizze = ProductEntity.builder()
                 .name("Karton na pizze 22x22cm a'100 biale")
                 .description("Kartony na pizze 22x22cm a'100 biale")
                 .barcode("595000654644")
@@ -565,7 +565,7 @@ public class LoadData implements CommandLineRunner {
 
 
 
-        Product foliaAluminiowa = Product.builder()
+        ProductEntity foliaAluminiowa = ProductEntity.builder()
                 .name("Folia aluminiowa 0,28m 1kg FABRYKA POLSKA /Z4/")
                 .description("Folia aluminiowa big rola. Szerokosc 28cm, waga 1kg +/-3%. Grubosc 13mic. Pakowana zbiorczo 6szt. w kartonie.")
                 .barcode("59523624532")
@@ -584,34 +584,34 @@ public class LoadData implements CommandLineRunner {
     }
 
     public void createDeliveries(){
-        Unit opakowanie = new Unit("opakowanie","op.");
-        Unit rolka = new Unit("rolka","rol.");
-        Unit sztuka = new Unit("sztuk","szt.");
-        Unit karton = new Unit("karton/-ów","kart.");
+        UnitEntity opakowanie = new UnitEntity("opakowanie","op.");
+        UnitEntity rolka = new UnitEntity("rolka","rol.");
+        UnitEntity sztuka = new UnitEntity("sztuk","szt.");
+        UnitEntity karton = new UnitEntity("karton/-ów","kart.");
 
         unitService.saveAll(Arrays.asList(opakowanie,rolka,sztuka,karton));
         unitService.findAll().forEach(System.out::println);
 
-        Dealer ulex = new Dealer("Ulex","65235742");
-        Dealer elpak = new Dealer("Elpak","56437854");
-        Dealer hersta = new Dealer("Hersta","82896442");
-        Dealer ika = new Dealer("Ika","102506724");
-        Dealer radpak = new Dealer("Radpak","50231501");
+        DealerEntity ulex = new DealerEntity("Ulex","65235742");
+        DealerEntity elpak = new DealerEntity("Elpak","56437854");
+        DealerEntity hersta = new DealerEntity("Hersta","82896442");
+        DealerEntity ika = new DealerEntity("Ika","102506724");
+        DealerEntity radpak = new DealerEntity("Radpak","50231501");
 
         dealerService.saveAll(Arrays.asList(ulex,elpak,hersta,ika,radpak));
         dealerService.findAll().forEach(System.out::println);
 
-        Supplier transportWlasny = new Supplier("Transport własny");
-        Supplier pekaes = new Supplier("Pekaes");
-        Supplier jasFbg = new Supplier("Jas Fbg");
-        Supplier dhl = new Supplier("DHL");
-        Supplier hellman = new Supplier("Hellman");
-        Supplier schenker = new Supplier("Schenker");
+        SupplierEntity transportWlasny = new SupplierEntity("Transport własny");
+        SupplierEntity pekaes = new SupplierEntity("Pekaes");
+        SupplierEntity jasFbg = new SupplierEntity("Jas Fbg");
+        SupplierEntity dhl = new SupplierEntity("DHL");
+        SupplierEntity hellman = new SupplierEntity("Hellman");
+        SupplierEntity schenker = new SupplierEntity("Schenker");
 
         supplierService.saveAll(Arrays.asList(transportWlasny,pekaes,jasFbg,dhl,hellman,schenker));
         supplierService.findAll().forEach(System.out::println);
 
-        Delivery dostawaZUlexu = Delivery.builder()
+        DeliveryEntity dostawaZUlexu = DeliveryEntity.builder()
                 .dealer(ulex)
                 .created(LocalDateTime.now())
                 .info("Dostawa przyjechała z jedną uszkodzoną paletą jednak towar był kompletny")
@@ -619,7 +619,7 @@ public class LoadData implements CommandLineRunner {
                 .supplier(pekaes)
                 .build();
 
-        ProductInDelivery kopertaNaFrytki = ProductInDelivery.builder()
+        ProductInDeliveryEntity kopertaNaFrytki = ProductInDeliveryEntity.builder()
                 .product(productService.findById(1L).orElse(null))
                 .quantity(4F)
                 .unit(opakowanie)
@@ -628,7 +628,7 @@ public class LoadData implements CommandLineRunner {
 
 
 
-        ProductInDelivery foliaAluminiowa = ProductInDelivery.builder()
+        ProductInDeliveryEntity foliaAluminiowa = ProductInDeliveryEntity.builder()
                 .product(productService.findById(3L).orElse(null))
                 .quantity(6F)
                 .unit(rolka)
@@ -637,7 +637,7 @@ public class LoadData implements CommandLineRunner {
 
 
 
-        ProductInDelivery kartonNaPizze = ProductInDelivery.builder()
+        ProductInDeliveryEntity kartonNaPizze = ProductInDeliveryEntity.builder()
                 .product(productService.findById(2L).orElse(null))
                 .quantity(2F)
                 .unit(opakowanie)
@@ -648,7 +648,7 @@ public class LoadData implements CommandLineRunner {
         dostawaZUlexu.setProductsInDelivery(Arrays.asList(kopertaNaFrytki,foliaAluminiowa,kartonNaPizze));
 
 
-        Delivery savedDelivery = deliveryService.save(dostawaZUlexu);
+        DeliveryEntity savedDelivery = deliveryService.save(dostawaZUlexu);
         deliveryService.findAll().forEach(System.out::println);
 
 
@@ -662,16 +662,16 @@ public class LoadData implements CommandLineRunner {
     }
 
     public void createWz(){
-        List<ProductInWz> productInWzs = new ArrayList<>();
+        List<ProductInWzEntity> productInWzs = new ArrayList<>();
 
-        Wz wz = Wz.builder()
+        WzEntity wz = WzEntity.builder()
                 .created(LocalDate.now())
                 .client(clientService.findById(24L).orElse(null))
                 .info("Dostarczyć przed godz 13\nTelefon do klienta 700432121")
                 .employee(employeeSerivce.findById(1L).orElse(null))
                 .build();
 
-        ProductInWz product1 = ProductInWz.builder()
+        ProductInWzEntity product1 = ProductInWzEntity.builder()
                 .product(productService.findAll().get(0))
                 .quantity(32f)
                 .unit(unitService.findById(1L).orElse(null))
@@ -679,7 +679,7 @@ public class LoadData implements CommandLineRunner {
                 .build();
 
 
-        ProductInWz product2 = ProductInWz.builder()
+        ProductInWzEntity product2 = ProductInWzEntity.builder()
                 .product(productService.findAll().get(1))
                 .quantity(10f)
                 .unit(unitService.findById(2L).orElse(null))
@@ -687,7 +687,7 @@ public class LoadData implements CommandLineRunner {
                 .build();
 
 
-        ProductInWz product3 = ProductInWz.builder()
+        ProductInWzEntity product3 = ProductInWzEntity.builder()
                 .product(productService.findAll().get(2))
                 .quantity(3f)
                 .unit(unitService.findById(4L).orElse(null))
@@ -699,7 +699,7 @@ public class LoadData implements CommandLineRunner {
 
         wz.setProductsInWz(Arrays.asList(product1,product2,product3));
 
-        Wz savedWz = wzService.save(wz);
+        WzEntity savedWz = wzService.save(wz);
 
         System.out.println(savedWz);
     }
