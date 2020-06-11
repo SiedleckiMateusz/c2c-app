@@ -1,48 +1,53 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<html lang="pl"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::body},'C2C Klient - Formularz')}">
 <head>
     <meta charset="UTF-8">
     <title>Formularz</title>
 
-    <style>
-        .my_form{
-            width: 200px;
-            margin-right: auto;
-            margin-left: auto;
-        }
-
-        .form-text{
-            margin: 5px;
-            padding: 5px;
-        }
-    </style>
 </head>
 <body>
-<div class="my_form">
-    <h1>Formularz</h1>
-    <form class="form" method="post" action="/clients">
-        <input th:value="${client?.id != null ? client.id : null}"
-               name="id"  value="" type="hidden">
-        <input th:value="${client?.warehouseName == null ? '' : client.warehouseName}"
-               class="form-text" type="text" placeholder="nazwa magazynowa" name="warehouseName">
-        <input th:value="${client?.realName == null ? '' : client.realName}"
-               class="form-text" type="text" placeholder="nazwa rzeczywista" name="realName">
-        <input th:value="${client?.address == null ? '' : client.address}"
-               class="form-text" type="text" placeholder="adres" name="address">
-        <input th:value="${client?.nip == null ? '' : client.nip}"
-               class="form-text" type="text" placeholder="nip" name="nip">
-        <input th:value="${client?.coordinates != null ? client.coordinates.id : null}"
-               type="hidden" name="coordinates.id" >
-        <input th:value="${client?.coordinates == null ? '' : client.coordinates.x}"
-               class="form-text" type="text" placeholder="współrzędna x" name="coordinates.x">
-        <input th:value="${client?.coordinates == null ? '' : client.coordinates.y}"
-               class="form-text" type="text" placeholder="współrzędna y" name="coordinates.y">
-        <input th:value="${client?.info == null ? '' : client.info}"
-               class="form-text" type="text" placeholder="dodatkowe informacje" name="info">
-        <input th:value="${client?.route == null ? '' : client.route.name}"
-               class="form-text" type="text" placeholder="trasa" name="route.name">
-        <button class="ui-button" type="submit">Prześlij</button>
-    </form>
+<div class="container-fluid">
+    <h1 class="mt-4" th:text="${client?.warehouseName == null ? 'Nowy klient' : client.warehouseName+' - Edycja'}">Klienci - Formularz</h1>
+    <ol th:if="${client != null}" class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/">Strona główna</a></li>
+        <li class="breadcrumb-item"><a th:href="'/clients/'+${client.id}" th:text="${client.realName}">Strona główna</a></li>
+        <li class="breadcrumb-item active" >Edycja</li>
+    </ol>
+    <ol th:unless="${client != null}" class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/">Strona główna</a></li>
+        <li class="breadcrumb-item active" >Nowy klient</li>
+    </ol>
+    <div class="row justify-content-center">
+        <div class="col-md-6 justify-content-center bg-light">
+            <form class="form" method="post" action="/clients">
+                <input th:value="${client?.id != null ? client.id : null}"
+                       name="id" value="" type="hidden">
+                <input th:value="${client?.warehouseName == null ? '' : client.warehouseName}"
+                       class="form-text" type="text" placeholder="nazwa magazynowa" name="warehouseName">
+                <input th:value="${client?.realName == null ? '' : client.realName}"
+                       class="form-text" type="text" placeholder="nazwa rzeczywista" name="realName">
+                <input th:value="${client?.address == null ? '' : client.address}"
+                       class="form-text" type="text" placeholder="adres" name="address">
+                <input th:value="${client?.nip == null ? '' : client.nip}"
+                       class="form-text" type="text" placeholder="nip" name="nip">
+                <input th:value="${client?.coordinates != null ? client.coordinates.id : null}"
+                       type="hidden" name="coordinates.id">
+                <input th:value="${client?.coordinates == null ? '' : client.coordinates.x}"
+                       class="form-text" type="text" placeholder="współrzędna x" name="coordinates.x">
+                <input th:value="${client?.coordinates == null ? '' : client.coordinates.y}"
+                       class="form-text" type="text" placeholder="współrzędna y" name="coordinates.y">
+                <input th:value="${client?.info == null ? '' : client.info}"
+                       class="form-text" type="text" placeholder="dodatkowe informacje" name="info">
+                <input th:value="${client?.route == null ? '' : client.route.name}"
+                       class="form-text" type="text" placeholder="trasa" name="route.name">
+                <button class="ui-button" type="submit">Prześlij</button>
+            </form>
+        </div>
+    </div>
+
+
 </div>
 
 

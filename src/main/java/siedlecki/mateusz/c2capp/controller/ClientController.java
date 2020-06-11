@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import siedlecki.mateusz.c2capp.controller.mapper.client.ClientMapper;
 import siedlecki.mateusz.c2capp.controller.model.client.ShowClient;
 import siedlecki.mateusz.c2capp.entity.client.ClientEntity;
 import siedlecki.mateusz.c2capp.entity.client.CoordinatesEntity;
@@ -15,7 +16,6 @@ import siedlecki.mateusz.c2capp.service.client.RouteService;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,58 +28,20 @@ public class ClientController {
     private final ClientService clientService;
     private final RouteService routeService;
     private final CoordinatesService coordinatesService;
+    private final ClientMapper clientMapper;
 
 
-    public ClientController(ClientService clientService, RouteService routeService, CoordinatesService coordinatesService) {
+    public ClientController(ClientService clientService, RouteService routeService, CoordinatesService coordinatesService, ClientMapper clientMapper) {
         this.clientService = clientService;
         this.routeService = routeService;
         this.coordinatesService = coordinatesService;
-    }
-
-    @GetMapping(value = {"/"})
-    public String getAll(Model model){
-        List<ShowClient> clients = clientService.findAllToShow();
-        clients.forEach(System.out::println);
-        model.addAttribute("clients",clients);
-
-        return "clients/index";
+        this.clientMapper = clientMapper;
     }
 
     @GetMapping(value = {""})
-    public String getAllWithSort(Model model,@RequestParam String sortBy){
-
+    public String getAll(Model model){
         List<ShowClient> clients = clientService.findAllToShow();
-
-        if (sortBy != null){
-            switch (sortBy){
-                case "warehouseName":
-                    clients.sort(Comparator.comparing(ShowClient::getWarehouseName));
-                    break;
-                case "realName":
-                    clients.sort((o1, o2) -> {
-                        if (o1.getRealName()== null){
-                            return 1;
-                        }
-                        if (o2.getRealName() == null){
-                            return (-1);
-                        }
-                        return o1.getRealName().compareTo(o2.getRealName());
-                    });
-                    break;
-                case "address":
-                    clients.sort((o1, o2) -> {
-                        if (o1.getAddress()== null){
-                            return 1;
-                        }
-                        if (o2.getAddress() == null){
-                            return (-1);
-                        }
-                        return o1.getAddress().compareTo(o2.getAddress());
-                    });
-                    break;
-            }
-        }
-
+        clients.forEach(System.out::println);
         model.addAttribute("clients",clients);
 
         return "clients/index";
@@ -110,8 +72,9 @@ public class ClientController {
             log.error("Nieprawidłowy format wartości Long");
         }
 
-        model.addAttribute("client",client);
-        log.info("Zwracam stronę detalis.html z obiektem: "+client);
+        ShowClient showClient = clientMapper.entityToShow(client);
+        model.addAttribute("client",showClient);
+        log.info("Zwracam stronę detalis.html z obiektem: "+showClient);
         return "clients/detalis";
     }
 

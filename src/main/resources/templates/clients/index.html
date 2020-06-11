@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<html lang="pl"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::body},'C2C Klienci')}">
 <head>
     <meta charset="UTF-8">
     <title>Clients</title>
@@ -14,191 +16,306 @@
             crossorigin=""></script>
 
 
-    <style>
-        table,th,tr,td{
-            border: 1px solid black;
-            border-spacing: inherit;
-        }
-        .table{
-            float: left;
-            width: 40%;
-            height: 600px;
-            overflow: auto;
-        }
-        .navbar{
-            width: 100%;
-            padding: 5px;
-            background-color: darkgray;
-            text-align: center;
-        }
-        #myInput{
-            width: 300px;
-            padding: 10px;
-        }
-
-        h1{
-            float: left;
-        }
-
-        button{
-            margin: 5px;
-            padding: 10px;
-        }
-
-        .content{
-            width: 100%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        #mapid{
-            float: left;
-            width: 60%;
-            height: 600px;
-            margin-top: 10px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        form{
-            margin: 10px;
-            float: right;
-        }
-        #newClient{
-            float: right;
-            margin: 10px;
-        }
-
-        tr:hover{
-            background-color: #e7e7e7;
-        }
-
-        .message{
-            color: red;
-            font-style: italic;
-        }
-    </style>
 </head>
 <body>
-    <div th:if="clients != null" class="content">
+
+<div class="container-fluid">
+    <h1 class="mt-4">Klienci</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/">Strona główna</a></li>
+        <li class="breadcrumb-item active">Klienci</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-body">Znajdziesz tutaj informacje dotyczące naszych klientów.
+            Aby zobaczyć więcej informacji kliknij więcej obok dokumentu który Cię interesuje.
+            Możesz przęłączać się między zakładkami "Mapa" "Tabela"
+        </div>
+    </div>
+
+    <div th:if="${clients != null}" class="content">
+
+        <ul class="nav nav-tabs bg-light" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#map" role="tab" aria-controls="profile"
+                   aria-selected="false">Mapa</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " id="home-tab" data-toggle="tab" href="#table" role="tab" aria-controls="home"
+                   aria-selected="true">Tabela</a>
+            </li>
+        </ul>
 
 
+        <div class="tab-content bg-light" id="myTabContent">
+<!--            WIDOK MAPY-->
+            <div class="tab-pane fade show active" id="map" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div style="height: 600px;" id="mapid">tutaj powinna być mapa</div>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="navbar">
-            <h1>Client list</h1>
-            <form method="get" action="/clients/find">
-                <input id="myInput" onkeyup="myFunction()" type="text" placeholder="Wyszukaj" name="text">
-                <button type="submit" title="Szukaj">Wyszukaj</button>
-            </form>
+            </div>
 
-            <a id="newClient" href="/clients/new"><button type="button">Nowy klient</button></a>
-            <div style="clear: both;"></div>
+<!--            WIDOK TABELI-->
+            <div class="tab-pane fade " id="table" role="tabpanel" aria-labelledby="home-tab">
+                <div class="card mb-4" th:if="${clients != null}">
+                    <div class="card-header"><i class="fas fa-table mr-1"></i>Klienci - tabela</div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <!--/*@thymesVar id="wzs" type="java.util.List"*/-->
+                            <table class="table table-bordered" id="dataTable" style="width: 100%;"
+                                   th:if="${!clients?.isEmpty()}">
+                                <thead>
+                                <tr>
+                                    <th>Nazwa magazynowa</th>
+                                    <th>Nazwa rzeczywista</th>
+                                    <th>Adres</th>
+                                    <th>Trasa</th>
+                                    <th>Więcej...</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>Nazwa magazynowa</th>
+                                    <th>Nazwa rzeczywista</th>
+                                    <th>Adres</th>
+                                    <th>Trasa</th>
+                                    <th>Więcej...</th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                <tr th:each="client : ${clients}">
+                                    <td th:text="${client.warehouseName}">Moja nazwa</td>
+                                    <td th:text="${client.realName}">Tak się na prawdę nazywam</td>
+                                    <td th:text="${client.address}">Moja ulica 21, Moje miasto</td>
+                                    <td th:text="${client.route != null? client.route.name : ''}">Trasa</td>
+                                    <td><a href="#" th:href="'/clients/'+${client.id}">Więcej...</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="card mb-4">
+            <div class="card-body text-danger" th:unless="${clients != null}">Brak klientów do wyświetlenia...</div>
         </div>
 
-
-        <div id="mapid">tutaj powinna być mapa</div>
-        <div class="table">
-            <table id="myTable" th:if="${!clients?.isEmpty()}">
-                <tr>
-                    <form method="get" action="/clients/find">
-                        <th><a href="/clients?sortBy=warehouseName">Nazwa magazynowa</a></th>
-                        <th><a href="/clients?sortBy=realName">Nazwa rzeczywista</a></th>
-                        <th><a href="/clients?sortBy=address">Adres</a></th>
-                        <th>More...</th>
-                    </form>
-                </tr>
-                <tr th:each="client : ${clients}">
-                    <td th:text="${client.warehouseName}">Moja nazwa</td>
-                    <td th:text="${client.realName}">Tak się na prawdę nazywam</td>
-                    <td th:text="${client.address}">Moja ulica 21, Moje miasto</td>
-                    <td><a href="#" th:href="'/clients/'+${client.id}">More...</a> </td>
-                </tr>
-            </table>
-
-            <p th:unless="${!clients?.isEmpty()}" class="message">Brak znalezionych klientów...</p>
-        </div>
+    </div>
+</div>
 
 
-        <script th:inline="javascript">
+<script th:inline="javascript">
 
-            let mymap = L.map('mapid').setView([51.2484, 22.5675], 9);
+    let mymap = L.map('mapid').setView([51.2484, 22.5675], 9);
 
-            L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-                maxZoom: 18,
-                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-                    '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-                    'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                id: 'mapbox/streets-v11',
-                tileSize: 512,
-                zoomOffset: -1
-            }).addTo(mymap);
-
-
-            // with ShowClient
-            let myClients = [[${clients}]];
-            let countAll = 0;
-            let countWithCoords = 0;
-
-            myClients.forEach(mapClient => {
-
-                console.log("ID: "+mapClient.id);
-                console.log("Name: "+mapClient.warehouseName);
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+        maxZoom: 18,
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+            '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+            'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1
+    }).addTo(mymap);
 
 
-                if(mapClient.coordinates!=null){
-                    L.marker([mapClient.coordinates.x, mapClient.coordinates.y]).addTo(mymap).bindPopup('<a href="/clients/'+mapClient.id+'">'+mapClient.warehouseName+'</a>');
-                    var popup = L.popup();
-                    console.log("X: "+mapClient.coordinates.x);
-                    console.log("Y: "+mapClient.coordinates.y);
-                    countWithCoords++;
-                }
+    // with ShowClient
+    let myClients = [[${clients}]];
+    let countAll = 0;
+    let countWithCoords = 0;
 
-                countAll++;
+    myClients.forEach(mapClient => {
 
-                    function onMapClick(e) {
-                        popup
-                            .setLatLng(e.latlng)
-                            .setContent('<a href="/clients/new/'+e.latlng.lat+'_'+e.latlng.lng+'">Dodaj tutaj punkt</a>')
-                            .openOn(mymap);
-                    }
+            console.log("ID: " + mapClient.id);
+            console.log("Name: " + mapClient.warehouseName);
 
-                    mymap.on('click', onMapClick);
+
+            if (mapClient.coordinates != null) {
+                L.marker([mapClient.coordinates.x, mapClient.coordinates.y]).addTo(mymap).bindPopup('<a href="/clients/' + mapClient.id + '">' + mapClient.warehouseName + '</a>');
+                var popup = L.popup();
+                console.log("X: " + mapClient.coordinates.x);
+                console.log("Y: " + mapClient.coordinates.y);
+                countWithCoords++;
             }
-            );
+
+            countAll++;
+
+            function onMapClick(e) {
+                popup
+                    .setLatLng(e.latlng)
+                    .setContent('<a href="/clients/new/' + e.latlng.lat + '_' + e.latlng.lng + '">Dodaj tutaj punkt</a>')
+                    .openOn(mymap);
+            }
+
+            mymap.on('click', onMapClick);
+        }
+    );
 
 
-
-            console.log("Wszyscy: "+countAll);
-            console.log("Ze współrzędnymi: "+countWithCoords);
-
+    console.log("Wszyscy: " + countAll);
+    console.log("Ze współrzędnymi: " + countWithCoords);
 
 
-            function myFunction() {
-                let input, filter, table, tr, td, i, txtValue;
-                input = document.getElementById("myInput");
-                filter = input.value.toUpperCase();
-                table = document.getElementById("myTable");
-                tr = table.getElementsByTagName("tr");
-                for (i = 0; i < tr.length; i++) {
-                    td = tr[i].getElementsByTagName("td")[0];
+    function myFunction() {
+        let input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    td = tr[i].getElementsByTagName("td")[1];
                     if (td) {
                         txtValue = td.textContent || td.innerText;
                         if (txtValue.toUpperCase().indexOf(filter) > -1) {
                             tr[i].style.display = "";
                         } else {
-                            td = tr[i].getElementsByTagName("td")[1];
-                            if (td) {
-                                txtValue = td.textContent || td.innerText;
-                                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                    tr[i].style.display = "";
-                                } else {
-                                    tr[i].style.display = "none";
-                                }
-                            }
+                            tr[i].style.display = "none";
                         }
                     }
                 }
             }
-        </script>
-    </div>
+        }
+    }
+</script>
+
+
+<!--    NOWA WERSJA STRONY-->
+
+<!--<div th:if="${clients != null}" class="content">-->
+
+
+<!--    <div class="navbar">-->
+<!--        <h1>Client list</h1>-->
+<!--        <form method="get" action="/clients/find">-->
+<!--            <input id="myInput" onkeyup="myFunction()" type="text" placeholder="Wyszukaj" name="text">-->
+<!--            <button type="submit" title="Szukaj">Wyszukaj</button>-->
+<!--        </form>-->
+
+<!--        <a id="newClient" href="/clients/new">-->
+<!--            <button type="button">Nowy klient</button>-->
+<!--        </a>-->
+<!--        <div style="clear: both;"></div>-->
+<!--    </div>-->
+
+
+<!--    <div id="mapid2" style="height: 600px">tutaj powinna być mapa</div>-->
+<!--    <div class="table">-->
+<!--        <table id="myTable" th:if="${!clients?.isEmpty()}">-->
+<!--            <tr>-->
+<!--                <form method="get" action="/clients/find">-->
+<!--                    <th><a href="/clients?sortBy=warehouseName">Nazwa magazynowa</a></th>-->
+<!--                    <th><a href="/clients?sortBy=realName">Nazwa rzeczywista</a></th>-->
+<!--                    <th><a href="/clients?sortBy=address">Adres</a></th>-->
+<!--                    <th>More...</th>-->
+<!--                </form>-->
+<!--            </tr>-->
+<!--            <tr th:each="client : ${clients}">-->
+<!--                <td th:text="${client.warehouseName}">Moja nazwa</td>-->
+<!--                <td th:text="${client.realName}">Tak się na prawdę nazywam</td>-->
+<!--                <td th:text="${client.address}">Moja ulica 21, Moje miasto</td>-->
+<!--                <td><a href="#" th:href="'/clients/'+${client.id}">More...</a></td>-->
+<!--            </tr>-->
+<!--        </table>-->
+
+<!--        <p th:unless="${!clients?.isEmpty()}" class="message">Brak znalezionych klientów...</p>-->
+<!--    </div>-->
+
+
+<!--    <script th:inline="javascript">-->
+
+<!--        let mymap = L.map('mapid').setView([51.2484, 22.5675], 9);-->
+
+<!--        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {-->
+<!--            maxZoom: 18,-->
+<!--            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +-->
+<!--                '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +-->
+<!--                'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',-->
+<!--            id: 'mapbox/streets-v11',-->
+<!--            tileSize: 512,-->
+<!--            zoomOffset: -1-->
+<!--        }).addTo(mymap);-->
+
+
+<!--        // with ShowClient-->
+<!--        let myClients = [[${clients}]];-->
+<!--        let countAll = 0;-->
+<!--        let countWithCoords = 0;-->
+
+<!--        myClients.forEach(mapClient => {-->
+
+<!--                console.log("ID: " + mapClient.id);-->
+<!--                console.log("Name: " + mapClient.warehouseName);-->
+
+
+<!--                if (mapClient.coordinates != null) {-->
+<!--                    L.marker([mapClient.coordinates.x, mapClient.coordinates.y]).addTo(mymap).bindPopup('<a href="/clients/' + mapClient.id + '">' + mapClient.warehouseName + '</a>');-->
+<!--                    var popup = L.popup();-->
+<!--                    console.log("X: " + mapClient.coordinates.x);-->
+<!--                    console.log("Y: " + mapClient.coordinates.y);-->
+<!--                    countWithCoords++;-->
+<!--                }-->
+
+<!--                countAll++;-->
+
+<!--                function onMapClick(e) {-->
+<!--                    popup-->
+<!--                        .setLatLng(e.latlng)-->
+<!--                        .setContent('<a href="/clients/new/' + e.latlng.lat + '_' + e.latlng.lng + '">Dodaj tutaj punkt</a>')-->
+<!--                        .openOn(mymap);-->
+<!--                }-->
+
+<!--                mymap.on('click', onMapClick);-->
+<!--            }-->
+<!--        );-->
+
+
+<!--        console.log("Wszyscy: " + countAll);-->
+<!--        console.log("Ze współrzędnymi: " + countWithCoords);-->
+
+
+<!--        function myFunction() {-->
+<!--            let input, filter, table, tr, td, i, txtValue;-->
+<!--            input = document.getElementById("myInput");-->
+<!--            filter = input.value.toUpperCase();-->
+<!--            table = document.getElementById("myTable");-->
+<!--            tr = table.getElementsByTagName("tr");-->
+<!--            for (i = 0; i < tr.length; i++) {-->
+<!--                td = tr[i].getElementsByTagName("td")[0];-->
+<!--                if (td) {-->
+<!--                    txtValue = td.textContent || td.innerText;-->
+<!--                    if (txtValue.toUpperCase().indexOf(filter) > -1) {-->
+<!--                        tr[i].style.display = "";-->
+<!--                    } else {-->
+<!--                        td = tr[i].getElementsByTagName("td")[1];-->
+<!--                        if (td) {-->
+<!--                            txtValue = td.textContent || td.innerText;-->
+<!--                            if (txtValue.toUpperCase().indexOf(filter) > -1) {-->
+<!--                                tr[i].style.display = "";-->
+<!--                            } else {-->
+<!--                                tr[i].style.display = "none";-->
+<!--                            }-->
+<!--                        }-->
+<!--                    }-->
+<!--                }-->
+<!--            }-->
+<!--        }-->
+<!--    </script>-->
+<!--</div>-->
 
 </body>
 </html>

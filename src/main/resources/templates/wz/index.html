@@ -1,123 +1,68 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<html lang="pl"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::body},'C2C wydanie zewnętrzne')}">
 <head>
     <meta charset="UTF-8">
     <title>Clients</title>
-
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-          crossorigin=""/>
-
-    <!-- Make sure you put this AFTER Leaflet's CSS -->
-    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-            integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-            crossorigin=""></script>
-
-
-    <style>
-        table,th,tr,td{
-            border: 1px solid black;
-            border-spacing: inherit;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .table{
-            float: left;
-            width: 80%;
-            overflow: auto;
-        }
-        .navbar{
-            width: 100%;
-            padding: 5px;
-            background-color: darkgray;
-            text-align: center;
-        }
-        #myInput{
-            width: 300px;
-            padding: 10px;
-        }
-
-        h1{
-            float: left;
-        }
-
-        button{
-            margin: 5px;
-            padding: 10px;
-        }
-
-        .content{
-            width: 100%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        #mapid{
-            float: left;
-            width: 60%;
-            height: 600px;
-            margin-top: 10px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        form{
-            margin: 10px;
-            float: right;
-        }
-        #newClient{
-            float: right;
-            margin: 10px;
-        }
-
-        tr:hover{
-            background-color: #e7e7e7;
-        }
-
-        .message{
-            color: red;
-            font-style: italic;
-        }
-    </style>
 </head>
 <body>
-<div th:if="clients != null" class="content">
+<!--/*@thymesVar id="wzs" type="java.util.List"*/-->
+<div class="content">
 
+    <div class="container-fluid" >
+        <h1 class="mt-4">Wydania zewnętrzne</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="/">Strona główna</a></li>
+            <li class="breadcrumb-item active">WZ</li>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-body">Znajdziesz tutaj informacje dotyczące wystawionych dokumentów WZ.<br/>
+                Aby zobaczyć więcej informacji kliknij więcej obok dokumentu który Cię interesuje.<br/>
+                Jeżeli chcesz wygenerować plik PDF kliknij na <span class="sb-nav-link-icon"><i class="fas fa-file-pdf"></i></span> przy dokumencie który Cię interesuje</div>
+        </div>
+        <div class="card mb-4"  th:if="${wzs != null}">
+            <div class="card-header"><i class="fas fa-table mr-1"></i>Wydania zewnętrzne - tabela</div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <!--/*@thymesVar id="wzs" type="java.util.List"*/-->
+                    <table class="table table-bordered" id="dataTable" style="width: 100%;" th:if="${!wzs?.isEmpty()}">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Data wystawienia</th>
+                            <th>Klient</th>
+                            <th>Wystawił</th>
+                            <th>Więcej...</th>
+                            <th>PDF</th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th>ID</th>
+                            <th>Data wystawienia</th>
+                            <th>Klient</th>
+                            <th>Wystawił</th>
+                            <th>Więcej...</th>
+                            <th>PDF</th>
+                        </tr>
+                        </tfoot>
+                        <tbody>
+                        <tr th:each="wz : ${wzs}">
+                            <td th:text="${wz.id}">ID</td>
+                            <td th:text="${wz.created}">Data wystawienia</td>
+                            <td th:text="${wz.client.realName}">Klient</td>
+                            <td th:text="${wz.employee.firstName}+' '+${wz.employee.lastName}">Employee</td>
+                            <td><a href="#" th:href="'/wz/'+${wz.id}">Więcej...</a> </td>
+                            <td><a href="#" th:href="'/wz/pdf/'+${wz.id}"><div class="sb-nav-link-icon"><i class="fas fa-file-pdf"></i></div></a> </td>
+                        </tr>
+                        </tbody>
+                    </table>
 
-
-    <div class="navbar">
-        <h1>WZ list</h1>
-        <form method="get" action="/wz">
-            <input id="myInput" type="text" placeholder="Wyszukaj" name="text">
-            <button type="submit" title="Szukaj">Wyszukaj</button>
-        </form>
-
-        <a id="newClient" href="/wz/new"><button type="button">Dodaj WZ</button></a>
-        <div style="clear: both;"></div>
-    </div>
-    
-    <div class="table">
-        <!--/*@thymesVar id="wzs" type="java.util.List"*/-->
-        <table id="myTable" th:if="${!wzs?.isEmpty()}">
-            <tr>
-                <form method="get" action="/clients/find">
-                    <th>ID</th>
-                    <th>Data wystawienia</th>
-                    <th>Klient</th>
-                    <th>Wystawił</th>
-                    <th>More...</th>
-                    <th>PDF</th>
-                </form>
-            </tr>
-            <tr th:each="wz : ${wzs}">
-                <td th:text="${wz.id}">ID</td>
-                <td th:text="${wz.created}">Data wystawienia</td>
-                <td th:text="${wz.client.realName}">Klient</td>
-                <td th:text="${wz.employee.firstName}+' '+${wz.employee.lastName}">Employee</td>
-                <td><a href="#" th:href="'/wz/'+${wz.id}">More...</a> </td>
-                <td><a href="#" th:href="'/wz/pdf/'+${wz.id}">Generuj PDF</a> </td>
-            </tr>
-        </table>
-
-        <p th:unless="${!wzs?.isEmpty()}" class="message">Brak znalezionych klientów...</p>
+                </div>
+            </div>
+        </div>
+        <p th:unless="${wzs != null}" class="message">Brak dokumentów do wyświetlenia...</p>
     </div>
     
 </div>

@@ -1,59 +1,82 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<html lang="pl"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout ::
+      layout(~{::body},${wz!=null? wz.client.realName:'no WZ file'})}">
 <head>
     <meta charset="UTF-8">
-    <title>Product</title>
+    <title>WZ</title>
 
-    <style>
-        button{
-            margin: 5px;
-        }
-        .mainContainer{
-            width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        table,th,tr,td{
-            border: 1px solid black;
-            border-spacing: inherit;
-            margin-left: auto;
-            margin-right: auto;
-        }
-    </style>
 </head>
 <body>
 <!--/*@thymesVar id="wz" type="siedlecki.mateusz.c2capp.controller.model.wz.ShowWz"*/-->
-<div class="mainContainer" th:if="${wz != null}">
-    <p th:text="${wz.id}">Id</p>
-    <p th:text="${wz.created}">Data utworzenia</p>
-    <p th:text="${wz.client.realName}">Nazwa klienta</p>
-    <p th:text="${wz.info}">Informacje</p>
-    <p th:text="${wz.employee.firstName}+' '+${wz.employee.lastName}">Imię i nazwisko wystawiającego</p>
+<div class="container-fluid">
+    <div th:if="${wz != null}">
+        <h1 class="mt-4" th:text="${wz.client.realName}">WZ</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="/">Strona główna</a></li>
+            <li class="breadcrumb-item"><a href="/wz">Wydanie zewnętrzne</a></li>
+            <li class="breadcrumb-item active" th:text="${wz.client.realName}"></li>
+        </ol>
+        <div class="row justify-content-center">
+            <div class="col-6 bg-light">
+                <div th:fragment="itemCard(titleParam,bodyParam,ifLink,path)" class="card">
+                    <div class="row">
+                        <div class="col-sm-6 ">
+                            <h5 th:text="${titleParam}">Nazwa parametru</h5>
+                        </div>
+                        <div th:if="${ifLink}" class="col-sm-6">
+                            <a th:href="${path}"><p th:text="${bodyParam}">parametr</p></a>
+                        </div>
+                        <div th:unless="${ifLink}" class="col-sm-6">
+                            <p th:text="${bodyParam}">parametr</p>
+                        </div>
+                    </div>
+                </div>
 
-    <div class="table">
-        <table id="myTable" th:if="${!wz.productsInWz.isEmpty()}">
-            <tr>
-                <form method="get" action="/clients/find">
-                    <th>Nazwa produktu</th>
-                    <th>Ilość</th>
-                    <th>J.M.</th>
-                    <th>Info</th>
-                </form>
-            </tr>
-            <tr th:each="product : ${wz.productsInWz}">
-                <td th:text="${product.product.name}">Mój produkt</td>
-                <td th:text="${product.quantity}">21</td>
-                <td th:text="${product.unit.shortName}">opakowań</td>
-                <td th:text="${product.info}">Dodatkowe informacje</td>
-            </tr>
-        </table>
+                <div th:replace="::itemCard('Numer ID',${wz.id},false,'')"></div>
+                <div th:replace="::itemCard('Data wystawienia',${wz.created},false,'')"></div>
+                <div th:replace="::itemCard('Odbiorca',${wz.client.realName+','+wz.client.address+', NIP:'+wz.client.nip},true,'/clients/'+${wz.client.id})"></div>
+                <div th:replace="::itemCard('Wystawił',${wz.employee.firstName+' '+wz.employee.lastName},true,'/employee/'+${wz.employee.id})"></div>
+                <div th:replace="::itemCard('Dodatkowe informacje',${wz.info},false,'')"></div>
 
-        <p th:unless="${!wz.productsInWz?.isEmpty()}" class="message">Brak produktów...</p>
+                <div class="table">
+                    <table id="myTable2" th:if="${!wz.productsInWz.isEmpty()}">
+                        <tr>
+                            <form method="get" action="/clients/find">
+                                <th>Nazwa produktu</th>
+                                <th>Ilość</th>
+                                <th>J.M.</th>
+                                <th>Info</th>
+                            </form>
+                        </tr>
+                        <tr th:each="product : ${wz.productsInWz}">
+                            <td ><a th:href="'/products/'+${product.product.id}" th:text="${product.product.name}">Mój produkt</a></td>
+                            <td th:text="${product.quantity}">21</td>
+                            <td th:text="${product.unit.shortName}">opakowań</td>
+                            <td th:text="${product.info}">Dodatkowe informacje</td>
+                        </tr>
+                    </table>
+
+                    <p th:unless="${!wz.productsInWz?.isEmpty()}" class="message">Brak produktów...</p>
+                </div>
+
+
+                <a href="#" th:href="'/wz/edit/'+${wz.id}">
+                    <button type="button" class="btn btn-primary">EDYTUJ</button>
+                </a>
+                <a href="#" th:href="'/wz/remove/'+${wz.id}">
+                    <button type="button" class="btn btn-danger">USUŃ</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="card bg-warning" th:unless="${wz != null}">
+        <div class="card-body">
+            Wydanie zewnętrzne o podanym id nie istnieje!<br/>
+            <a href="/wz">Powrót</a>
+        </div>
     </div>
 
-    <a href="#" th:href="'/wz/edit/'+${wz.id}"><button type="button">EDYTUJ</button></a>
-    <a href="#" th:href="'/wz/remove/'+${wz.id}"><button type="button">USUŃ</button></a>
-</div>
-<p th:if="${wz == null}"> Nie ma takiego użytkownika</p>
 </body>
 </html>

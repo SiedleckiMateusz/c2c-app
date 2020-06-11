@@ -1,30 +1,103 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<html lang="pl"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout ::
+      layout(~{::body},('C2C '+${client!=null ? client.realName : ' no client'}))}">
 <head>
     <meta charset="UTF-8">
     <title>Product</title>
 
     <style>
-        button{
+        button {
             margin: 5px;
         }
     </style>
 </head>
 <body>
-<div th:if="${client != null}">
-    <p th:text="${client.id}"></p>
-    <p th:text="${client.warehouseName}"></p>
-    <p th:text="${client.realName}"></p>
-    <p th:text="${client.nip}"></p>
-    <p th:text="${client.address}"></p>
-    <p th:text="${client.coordinates?.x}"></p>
-    <p th:text="${client.coordinates?.y}"></p>
-    <p th:text="${client.info}"></p>
-    <p th:text="${client.route?.name}"></p>
+<div class="container-fluid">
+    <div th:if="${client != null}">
+        <h1 class="mt-4" th:text="${client.warehouseName}">Klienci</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="/">Strona główna</a></li>
+            <li class="breadcrumb-item"><a href="/clients">Klienci</a></li>
+            <li class="breadcrumb-item active" th:text="${client.warehouseName}"></li>
+        </ol>
+        <div class="row">
+            <div class="col-md-6">
+                <img class="img-thumbnail img-fluid" th:src="@{/assets/img/no_client_photo.jpg}">
+            </div>
+            <div class="col-md-5">
 
-    <a href="#" th:href="'/clients/edit/'+${client.id}"><button type="button">EDYTUJ</button></a>
-    <a href="#" th:href="'/clients/remove/'+${client.id}"><button type="button">USUŃ</button></a>
+                <div th:fragment="itemCard(titleParam,bodyParam)" class="card">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h5 th:text="${titleParam}">Nazwa parametru</h5>
+                        </div>
+                        <div class="col-sm-6">
+                            <p th:text="${bodyParam}">parametr</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:replace="::itemCard('Numer ID',${client.id})"></div>
+                <div th:replace="::itemCard('Nazwa magazynowa',${client.warehouseName})"></div>
+                <div th:replace="::itemCard('Nazwa rzeczywista',${client.realName})"></div>
+                <div th:replace="::itemCard('Numer NIP',${client.nip})"></div>
+                <div th:replace="::itemCard('Informacje o dostawie',${client.info})"></div>
+                <div th:replace="::itemCard('Trasa',${client.route?.name})"></div>
+                <div th:replace="::itemCard('Adres',${client.address})"></div>
+                <div th:replace="::itemCard('Współrzędne',${client.coordinates?.x}+' , '+${client.coordinates?.y})"></div>
+
+                <div class="card" th:if="${client.coordinates != null}">
+                    <div class="card-body">
+                        <div style="height: 400px;" id="mapid">tutaj powinna być mapa</div>
+
+                        <script th:inline="javascript">
+
+                            let myClient = [[${client}]];
+
+                            if (myClient.coordinates != null) {
+
+                                let mymap = L.map('mapid').setView([myClient.coordinates.x, myClient.coordinates.y], 18);
+
+                                L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+                                    maxZoom: 18,
+                                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+                                        '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                                        'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                                    id: 'mapbox/streets-v11',
+                                    tileSize: 512,
+                                    zoomOffset: -1
+                                }).addTo(mymap);
+
+
+                                L.marker([myClient.coordinates.x, myClient.coordinates.y]).addTo(mymap).bindPopup('<a href="/clients/' + myClient.id + '">' + myClient.warehouseName + '</a>');
+                                var popup = L.popup();
+                                console.log("X: " + myClient.coordinates.x);
+                                console.log("Y: " + myClient.coordinates.y);
+
+                            }
+
+                        </script>
+                    </div>
+                </div>
+
+                <a href="#" th:href="'/clients/edit/'+${client.id}">
+                    <button type="button" class="btn btn-primary">EDYTUJ</button>
+                </a>
+                <a href="#" th:href="'/clients/remove/'+${client.id}">
+                    <button type="button" class="btn btn-danger">USUŃ</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="card bg-warning" th:unless="${client != null}">
+        <div class="card-body">
+            Client o podanym id nie istnieje!<br/>
+            <a href="/clients">Powrót</a>
+        </div>
+    </div>
+
 </div>
-    <p th:if="${client == null}"> Nie ma takiego użytkownika</p>
 </body>
 </html>
